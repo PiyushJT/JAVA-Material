@@ -1,3 +1,14 @@
+/*
+
+LJLJL
+LJLJ
+ LJL
+ LJ
+  L
+
+*/
+
+
 class Pattern298 {
     public static void main(String[] args) {
 

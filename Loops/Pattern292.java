@@ -1,3 +1,14 @@
+/*
+
+54321
+ 4321
+  321
+   21
+    1
+
+*/
+
+
 import java.util.*;
 
 class Pattern292 {

@@ -1,3 +1,14 @@
+/*
+
+1
+2 3
+6 5 4
+7 8 9 10
+15 14 13 12 11
+
+*/
+
+
 import java.util.*;
 
 class Pattern297 {

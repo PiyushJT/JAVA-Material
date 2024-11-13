@@ -1,3 +1,14 @@
+/*
+
+12345
+2345
+345
+45
+5
+
+*/
+
+
 import java.util.*;
 
 class Pattern294 {

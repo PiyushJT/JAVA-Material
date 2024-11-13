@@ -1,3 +1,14 @@
+/*
+
+  1
+ AB
+ 123
+ABCD
+12345
+
+*/
+
+
 import java.util.*;
 
 class Pattern293 {

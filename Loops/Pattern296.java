@@ -1,3 +1,14 @@
+/*
+
+1
+24
+135
+2468
+13579
+
+*/
+
+
 import java.util.*;
 
 class Pattern296 {
