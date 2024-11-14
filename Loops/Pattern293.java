@@ -1,10 +1,10 @@
 /*
 
-  1
- AB
- 123
-ABCD
-12345
+    1
+   A B
+  1 2 3
+ A B C D
+1 2 3 4 5
 
 */
 
@@ -24,7 +24,7 @@ class Pattern293 {
 
 
             // for spaces
-            for(int k = (n-i)/2; k > 0; k--){
+            for(int k = n-i; k > 0; k--){
                 System.out.print(" ");
             }
 
@@ -33,7 +33,7 @@ class Pattern293 {
 
                 // single line
                 for(int j = 1; j <= i; j++){
-                   System.out.print(j);
+                   System.out.print(j + " ");
                 }
 
             }
@@ -41,7 +41,7 @@ class Pattern293 {
             // for alphabets
             else{
                 for(char j = 'A'; j <= 64+i; j++){
-                    System.out.print(j);
+                    System.out.print(j + " ");
                  }
             }
             

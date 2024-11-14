@@ -18,58 +18,56 @@ class Pattern297 {
         System.out.println("Enter the number");
         int n = sc.nextInt();
 
-        int num = 0;
+        // reverse numbers
+        int r = 2;
 
-        int i = 0;
+        // forward numbers
+        int f = 1;
 
-        boolean isLineChanged = false;
-        while (i <= n) {
 
+        // Row
+        for(int i =1; i <= n; i++) {
+
+            // next line
             System.out.println();
-            isLineChanged = true;
 
+
+            // Forward rows
             if (i % 2 == 0){
 
                 int j = 1;
+
                 while(j <= i) {
 
-                    num++;
-                    System.out.print(num + " ");
+                    f++;
+                    System.out.print(f + " ");
+
+                    r = f + i + 2;
+
 
                     j++;
-                    isLineChanged = false;
                 }
 
             }
+
+            // Reverse rows
             else {
 
                 int j = 1;
-                int k = 0;
+
                 while (j <= i){
 
-                    if(isLineChanged){
-                        num += i+1;
+                    r--;
+                    System.out.print(r + " ");
 
-                        k = num-1;
-                    }
+                    f = r + i -1;
 
-                    num--;
-                    System.out.print(num + " ");
 
                     j++;
-                    isLineChanged = false;
-
-                    if(j > i){
-                        num = k;
-                    }
-
                 }
 
             }
-
-            i++;
         }
 
     }
-
 }

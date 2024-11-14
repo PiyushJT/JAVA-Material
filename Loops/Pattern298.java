@@ -1,10 +1,10 @@
 /*
 
-LJLJL
-LJLJ
- LJL
- LJ
-  L
+L J L J L
+ L J L J
+  L J L
+   L J
+    L
 
 */
 
@@ -21,14 +21,14 @@ class Pattern298 {
             System.out.println();
 
             // for spaces
-            for(int k = 0; k < (n-i)/2; k++){
+            for(int k = 0; k < (n-i); k++){
                 System.out.print(" ");
             }
 
             // for pattern
             for(int j = i; j > 0; j--){
 
-                System.out.print(ch);
+                System.out.print(ch + " ");
 
                 ch = (ch == 'L')?'J':'L';
 
