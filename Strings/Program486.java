@@ -19,6 +19,24 @@ class Program486 {
         System.out.println("Enter the character");
         char ch = sc.next().charAt(0);
 
+        String newStr = "";
+
+        for(int i = 0; i<= str.length()-1; i++){
+
+
+            // If the char from the string is not the char which is to be removed
+            if(str.charAt(i) != ch){
+
+                // Add the char at the end of new string
+                newStr = newStr + str.charAt(i);
+
+            }
+        }
+
+
+
+    /* -----> Without using length() method
+
 
         // Adding null at the end. -> to know that string is finished.
         str = str + '\0';
@@ -42,10 +60,14 @@ class Program486 {
             i++;
         }
 
+        // remove null from end.
         str = str.substring(0, str.length()-1);
 
         System.out.println(str);
 
+    */
+
+        System.out.println(newStr);
 
     }
 }
