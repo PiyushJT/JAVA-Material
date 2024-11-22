@@ -33,6 +33,8 @@ class Program486 {
             }
         }
 
+        str = newStr;
+
 
 
     /* -----> Without using length() method
@@ -63,11 +65,10 @@ class Program486 {
         // remove null from end.
         str = str.substring(0, str.length()-1);
 
-        System.out.println(str);
 
     */
 
-        System.out.println(newStr);
+        System.out.println(str);
 
     }
 }
