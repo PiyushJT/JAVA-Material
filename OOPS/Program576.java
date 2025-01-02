@@ -8,8 +8,6 @@ input class like scanner)
 
 */
 
-import java.util.*;
-
 class Program576 {
 
     static int low;
