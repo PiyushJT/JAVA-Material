@@ -6,7 +6,7 @@ WAP to find HCF of two numbers using recursion.
 
 import java.util.*;
 
-class Program570 {
+class Program570_574 {
 
     public static void main(String[] args) {
 
@@ -19,16 +19,23 @@ class Program570 {
         int b = sc.nextInt();
 
 
-        System.out.println(hcf(a,b));
+        System.out.println("Hcf is " + hcf(a,b));
+        System.out.println("Lcm is " + lcm(a,b));
 
     }
 
     static int hcf(int a, int b) {
 
-        if (b == 0)
-            return a;
+        if (a % b == 0)
+            return b;
         else
             return hcf(b, a % b);
+
+    }
+
+    static int lcm(int a, int b) {
+
+        return a * b / hcf(a,b);
 
     }
 
