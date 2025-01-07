@@ -53,7 +53,7 @@ class Temperature {
 
     float celcius(float ferenhit){
 
-        return (ferenhit - 32) * 5f/9;
+        return (ferenhit - 32) * 5/9;
     }
 
 }
