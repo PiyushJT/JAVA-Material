@@ -26,8 +26,8 @@ class Program570_574 {
 
     static int hcf(int a, int b) {
 
-        if (a % b == 0)
-            return b;
+        if (b == 0)
+            return a;
         else
             return hcf(b, a % b);
 
