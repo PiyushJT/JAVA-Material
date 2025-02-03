@@ -1,6 +1,6 @@
 /*
 
-Write a java program to
+Write a Java Program to calculate the addition and subtraction of two values using this keyword.
 
 */
 
@@ -8,13 +8,27 @@ class Program711 {
 
     public static void main(String[] args) {
 
-        Data d = new Data();
+        Calc c = new Calc();
+        c.add();
+        c.subtr();
 
-        d.roll = 12;
-        d.name = "Someone";
-        d.marks = 69;
+    }
 
-        d.show(12, "someone", 69);
+}
+
+class Calc{
+    int a = 13;
+    int b = 54;
+
+    void add(){
+
+        System.out.println(this.a + this.b);
+
+    }
+
+    void subtr(){
+
+        System.out.println(this.a - this.b);
 
     }
 
