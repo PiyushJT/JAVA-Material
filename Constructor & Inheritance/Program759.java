@@ -25,8 +25,6 @@ class Program759 {
         Parent3.Child3 child = p.new Child3(a,b,c);
         child.findSecondMax();
 
-
-
     }
 
 }
