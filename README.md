@@ -1,3 +1,16 @@
+# Search for a Program by Problem Statement
+
+Each program file includes a comment with its problem statement. You can search for a specific problem statement on GitHub using the following method:
+
+### Using GitHub's Search Feature:
+1. Click "/" key on your keyboard or Click on the **"Search"** bar at the top of the page.
+2. Type the question or a part of question directly without changing any text already present:
+3. Press **Enter**, and GitHub will display matching files containing the searched phrase.
+4. Click on a file to view its code.
+
+Now, you have successfully downloaded, extracted, and can search for specific programs using problem statements directly on GitHub. Open the folder in your preferred code editor to start exploring the project.
+
+
 # How to Download this folder
 
 Follow these steps to download the repository as a ZIP file and extract it to access all the source code on your PC.
