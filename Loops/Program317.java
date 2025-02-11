@@ -10,9 +10,9 @@ class Program317 {
         System.out.println("Enter the number");
         int n = sc.nextInt();
 
-        int sum = n%10;
+        int sum = n % 10;
 
-        while(n > 10){
+        while(n >= 10){
             n /= 10;
         }
         sum += n;

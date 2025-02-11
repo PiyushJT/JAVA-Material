@@ -79,10 +79,10 @@ class Demo2 {
         for(int val : arr){
 
             if(val % 2 == 0){
-                System.out.println("Even " + val);
+                System.out.println(val + " is Even");
             }
             else {
-                System.out.println("Odd " + val);
+                System.out.println(val + " is Odd");
             }
 
         }

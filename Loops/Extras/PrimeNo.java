@@ -12,7 +12,7 @@ class PrimeNo{
 
 
 		// initialisation
-		int i = 1, count = 0;
+		int count = 0;
 
 
 		// Prime number can only be known if it is greater than 1
@@ -20,7 +20,7 @@ class PrimeNo{
 
 
 			// Count the number of factors
-			for(; i<=n; i++) {
+			for(int i = 2; i < n; i++) {
 
 				if (n % i == 0) {
 					count++;
@@ -30,7 +30,7 @@ class PrimeNo{
 
 
 			// if it is greater than 2 -> it is not prime else it is prime
-			if(count > 2){
+			if(count > 0){
 			
 				System.out.println("It is not prime");
 			}
