@@ -7,7 +7,7 @@ Write a Java program to convert Decimal to binary using recursion
 
 import java.util.*;
 
-class H09 {
+class H09_25 {
 
     public static void main(String[] args) {
 
