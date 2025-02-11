@@ -1,7 +1,13 @@
 /*
 
-Write a Java Program to calculate area of Circle and
-Rectangle using constructor overloading.
+698: Write a Java Program to calculate area of Circle and
+     Rectangle using constructor overloading.
+
+701: create a parameterized constructor to find the area
+     of Rectangle
+
+702: Write a Java Program to calculate area of Circle
+     using default constructor.
 
 */
 

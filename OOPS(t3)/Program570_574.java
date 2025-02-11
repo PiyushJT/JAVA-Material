@@ -1,6 +1,8 @@
 /*
 
-WAP to find HCF of two numbers using recursion.
+570: WAP to find HCF of two numbers using recursion.
+
+643: Write a Java program to find GCD and LCM of two numbers using recursion
 
 */
 
