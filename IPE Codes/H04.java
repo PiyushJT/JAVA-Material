@@ -7,7 +7,7 @@ WAP to calculate nCr using recursion.  nCr = n! / (r! * (n-r)!)
 
 import java.util.*;
 
-class H4 {
+class H04 {
 
     public static void main(String[] args) {
 

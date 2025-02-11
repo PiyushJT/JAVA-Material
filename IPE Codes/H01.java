@@ -14,7 +14,7 @@ that specify the width and height of the rectangle. Methods:
 
 import java.util.*;
 
-class H1 {
+class H01 {
 
     public static void main(String[] args) {
 

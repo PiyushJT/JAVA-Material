@@ -7,7 +7,7 @@ WAP to count ODD and EVEN numbers from given 10 numbers.
 
 import java.util.*;
 
-class E5 {
+class E05 {
 
     public static void main(String[] args) {
 

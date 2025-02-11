@@ -7,7 +7,7 @@ WAP to find GCD of the 2 numbers using recursion
 
 import java.util.*;
 
-class H5 {
+class H05 {
 
     public static void main(String[] args) {
 

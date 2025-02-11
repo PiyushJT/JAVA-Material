@@ -8,7 +8,7 @@ Maximum number using nested if else.
 
 import java.util.*;
 
-class E2 {
+class E02 {
 
     public static void main(String[] args) {
 

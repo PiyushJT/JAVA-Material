@@ -13,7 +13,7 @@ and a triangle respectively
 
 import java.util.*;
 
-class H3 {
+class H03 {
 
     public static void main(String[] args) {
 

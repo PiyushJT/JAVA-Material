@@ -9,7 +9,7 @@ it prints 20, 25, 30, 35, 40, 45. Take input using Scanner class.
 
 import java.util.*;
 
-class E4 {
+class E04 {
 
     public static void main(String[] args) {
 

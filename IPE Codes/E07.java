@@ -7,7 +7,7 @@ WAP to find out Armstrong Numbers from a given number. (Given number should be a
 
 import java.util.*;
 
-class E7 {
+class E07 {
 
     public static void main(String[] args) {
 

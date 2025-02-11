@@ -8,7 +8,7 @@ vowel or consonant using switch statement.
 
 import java.util.*;
 
-class E3 {
+class E03 {
 
     public static void main(String[] args) {
 

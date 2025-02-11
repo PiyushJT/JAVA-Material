@@ -7,7 +7,7 @@ WAP to check whether the given number is Prime or not
 
 import java.util.*;
 
-class E6 {
+class E06 {
 
     public static void main(String[] args) {
 

@@ -11,7 +11,7 @@ Percentage <50 means Grade F
 
 import java.util.*;
 
-class E1 {
+class E01 {
 
     public static void main(String[] args) {
 

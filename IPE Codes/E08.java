@@ -7,7 +7,7 @@ WAP to generate Fibonacci series of numbers.
 
 import java.util.*;
 
-class E8 {
+class E08 {
 
     public static void main(String[] args) {
 

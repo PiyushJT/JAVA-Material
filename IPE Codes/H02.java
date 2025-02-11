@@ -10,7 +10,7 @@ Use Class, object & method.
 
 import java.util.*;
 
-class H2 {
+class H02 {
 
     public static void main(String[] args) {
 

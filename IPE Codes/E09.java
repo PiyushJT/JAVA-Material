@@ -7,7 +7,7 @@ WAP to find out sum of first and last digit of a given number.
 
 import java.util.*;
 
-class E9 {
+class E09 {
 
     public static void main(String[] args) {
 
