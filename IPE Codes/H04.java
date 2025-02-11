@@ -20,9 +20,11 @@ class H04 {
         int r = sc.nextInt();
 
         System.out.println(nCr(n, r));
+        System.out.println(nCrDirect(n , r));
 
     }
 
+    // method 1
     static int nCr(int n, int r){
 
         return fact(n) / (fact(r) * fact(n-r));
@@ -37,4 +39,17 @@ class H04 {
             return n * fact(n-1);
 
     }
+
+
+
+
+
+    // method 2
+    static int nCrDirect(int n, int r) {
+        if (r == 0 || r == n) {
+            return 1;
+        }
+        return nCrDirect(n - 1, r - 1) + nCrDirect(n - 1, r);
+    }
+
 }
