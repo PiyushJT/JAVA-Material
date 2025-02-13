@@ -14,9 +14,9 @@ class E23 {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Enter string");
-        String str = sc.nextLine();
+        String str = sc.nextLine().trim();
 
-        int count = 0;
+        int count = 1;
 
         for(int i = 0; i < str.length(); i++){
 
