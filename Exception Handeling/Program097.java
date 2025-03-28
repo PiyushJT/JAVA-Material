@@ -25,6 +25,6 @@ class Program097 {
     }
 }
 
-class SumException extends Exception {
+class SumException extends RuntimeException {
 
 }

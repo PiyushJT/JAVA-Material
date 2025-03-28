@@ -28,6 +28,6 @@ class Program098 {
     }
 }
 
-class NegException extends Exception {
+class NegException extends RuntimeException {
 
 }

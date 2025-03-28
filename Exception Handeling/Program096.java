@@ -23,6 +23,6 @@ class Program096 {
     }
 }
 
-class ZeroException extends Exception{
+class ZeroException extends RuntimeException{
 
 }
