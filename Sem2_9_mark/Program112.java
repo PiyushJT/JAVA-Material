@@ -301,7 +301,7 @@ class DeviceNotFoundException extends RuntimeException{
     }
 }
 
-class InvalidChoiceException extends RuntimeException{
+class InvalidChoiceException extends Exception{
     InvalidChoiceException(){
         super("Invalid choice");
     }
