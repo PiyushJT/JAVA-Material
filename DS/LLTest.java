@@ -6,7 +6,7 @@ public class LLTest {
 
         Scanner sc = new Scanner(System.in);
 
-        LinkedList myList = new LinkedList();
+        SinglyLinkedList myList = new SinglyLinkedList();
 
 
         int ch;

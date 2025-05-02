@@ -1,4 +1,4 @@
-public class LinkedList {
+public class SinglyLinkedList {
 
     Node head = null;
 

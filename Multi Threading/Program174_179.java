@@ -14,7 +14,7 @@ Explain the concept of Syncronization by taking suitable example.
 
 */
 
-public class Program174 {
+public class Program174_179 {
 
     public static void main(String[] args) {
 
