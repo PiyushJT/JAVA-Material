@@ -1,8 +1,5 @@
 /*
 
-⚠️ Incomplete. "don't read this. its very confusing"
-⚠️ (Question not clear)
-
 Write a complete multi-threaded program to meet following requirements:
 o Two threads of same type are to be instantiated in the method main.
 o Each thread acts as a producer as well as a consumer.
@@ -18,47 +15,97 @@ public class Program168_173 {
 
     public static void main(String[] args) {
 
-        ProducerConsumer pc1 = new ProducerConsumer("pc1");
-        ProducerConsumer pc2 = new ProducerConsumer("pc2");
+        PandC pc = new PandC();
+
+        producer p = new producer(pc);
+        consumer c = new consumer(pc);
+
+        p.start();
+        c.start();
 
     }
 
 }
 
-class Info {
-    int val;
-    String source;
-    String destination;
 
-    Info(int val, String source, String destination) {
-        this.val = val;
-        this.source = source;
-        this.destination = destination;
+class PandC {
+
+    boolean b = false;
+    int data;
+
+    synchronized void produce(int n) throws InterruptedException {
+
+        if(b)
+            wait();
+
+        data = n;
+        System.out.println("produced " + data);
+
+        b = true;
+        notify();
+
+    }
+
+    synchronized void consume() throws InterruptedException {
+
+        if (!b)
+            wait();
+
+        System.out.println("consumed " + data);
+
+        b = false;
+        notify();
+
     }
 
 }
 
-class ProducerConsumer extends Thread {
 
-    Info givenInfo;
+class producer extends Thread{
 
-    ProducerConsumer(Info givenInfo, String name) {
-        this.givenInfo = givenInfo;
-        Thread.currentThread().setName(name);
+    PandC pc;
+
+    public producer(PandC pc) {
+        this.pc = pc;
     }
 
-    ProducerConsumer(String name) {
-        Thread.currentThread().setName(name);
-    }
+    public void run(){
 
+        for (int i = 1; i <= 5; i++){
 
-    public void run() {
+            try {
+                pc.produce(i);
+            }
+            catch (InterruptedException e){
+                System.out.println("Interrupted");
+            }
 
-        for (int i = 1; i <= 5; i++) {
-            Info info = new Info(i, "source", "destination");
-            System.out.println(info.val + " " + info.source + " " + info.destination);
         }
 
+    }
+
+}
+
+
+class consumer extends Thread{
+
+    PandC pc;
+
+    consumer(PandC pc){
+        this.pc = pc;
+    }
+
+    public void run(){
+
+        for(int i = 0; i <= 5; i++){
+
+            try {
+                pc.consume();
+            }
+            catch (InterruptedException e){
+                System.out.println("Interrupted");
+            }
+        }
 
     }
 
