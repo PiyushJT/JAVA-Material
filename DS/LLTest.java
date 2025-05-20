@@ -1,92 +1,39 @@
-import java.util.Scanner;
-
 public class LLTest {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-
-        SinglyLinkedList myList = new SinglyLinkedList();
+        SinglyLinkedList l = new SinglyLinkedList();
 
 
-        int ch;
+        l.insertEnd(10);
+        l.insertEnd(40);
+        l.insertEnd(30);
+        l.insertEnd(50);
+        l.insertEnd(20);
 
-        do {
 
-            System.out.println();
-            System.out.println();
-            System.out.println("1. Insert start");
-            System.out.println("2. Insert end");
-            System.out.println("3. Delete start");
-            System.out.println("4. Delete end");
-            System.out.println("5. display");
-            System.out.println();
-            System.out.println("6. length");
-            System.out.println();
-            System.out.println("0. Exit");
-            System.out.println();
-            System.out.println("Enter your choice: ");
+        l.insertAfter(20, 25);
+        l.insertAfter(30, 35);
+        l.insertAfter(0, 45);
 
-            ch = sc.nextInt();
+        l.display();
 
-            switch(ch){
-                case 1: {
+        l.swap(7);
 
-                    System.out.println("Enter value: ");
-                    int val = sc.nextInt();
-                    myList.insertFirst(val);
-                    break;
+        l.display();
 
-                }
-                case 2: {
+        l.sort();
 
-                    System.out.println("Enter value: ");
-                    int val = sc.nextInt();
+        l.display();
 
-                    //myList.insertEnd(myList.head, val);
-                    myList.insertEnd(val);
+        SinglyLinkedList l2 = l.copy();
 
-                    break;
+        l2.display();
+        l2.deleteVal(25);
 
-                }
-                case 3: {
+        l.display();
+        l2.display();
 
-                    myList.deleteFirst();
-                    break;
-
-                }
-                case 4: {
-
-                    myList.deleteEnd();
-                    break;
-
-                }
-                case 5: {
-
-                    //myList.display();
-                    myList.display(myList.head);
-                    break;
-
-                }
-                case 6: {
-
-                    System.out.println("The length is " + myList.length());
-                    break;
-
-                }
-                case 0: {
-                    System.out.println("Okay Bye :)");
-                    break;
-                }
-
-                default: {
-                    System.out.println("Wrong input.");
-                    break;
-                }
-            }
-
-        }
-        while (ch != 0);
 
 
     }

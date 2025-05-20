@@ -1,5 +1,7 @@
 # Search for a Program by Problem Statement
 
+## (Numbering can be different)
+
 Each program file includes a comment with its problem statement. You can search for a specific problem statement on GitHub using the following method:
 
 ### Using GitHub's Search Feature:

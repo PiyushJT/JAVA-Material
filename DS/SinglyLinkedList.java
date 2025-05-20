@@ -48,6 +48,119 @@ public class SinglyLinkedList {
 
     }
 
+
+    public void insertAfter(int after, int val){
+
+        Node n = head;
+
+        while (n != null){
+
+            if (n.data == after){
+
+                Node n2 = n.next;
+
+                n.next = new Node(val);
+
+                n.next.next = n2;
+
+                return;
+
+            }
+
+            n = n.next;
+        }
+
+        System.out.println("404 value not found! :( ");
+
+
+    }
+
+    public void deleteVal(int val){
+
+        Node n = head;
+
+        if (head.data == val) {
+            head = head.next;
+            return;
+        }
+
+
+        while (n.next != null){
+
+            if (n.next.data == val){
+                n.next = n.next.next;
+                return;
+            }
+
+            n = n.next;
+        }
+
+    }
+
+
+    void swap(int pos){
+
+        if (head == null || head.next == null)
+            return;
+
+        Node n1 = head;
+        Node n2 = head.next;
+
+
+        for (int i = 1; i < pos; i++){
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+
+        if (n2 == null)
+            return;
+
+        int temp = n1.data;
+        n1.data = n2.data;
+        n2.data = temp;
+
+    }
+
+
+    public SinglyLinkedList copy(){
+
+        SinglyLinkedList l = new SinglyLinkedList();
+
+        Node n = head;
+
+        while (n != null){
+            l.insertEnd(n.data);
+            n = n.next;
+        }
+
+        return l;
+
+    }
+
+
+    public void sort(){
+
+        Node n = head;
+
+        for(Node n1 = head; n1 != null; n1 = n1.next){
+
+            for (Node n2 = n1; n2 != null; n2 = n2.next){
+
+                if (n1.data > n2.data){
+                    int temp = n1.data;
+                    n1.data = n2.data;
+                    n2.data = temp;
+                }
+
+            }
+
+        }
+
+
+    }
+
+
+
     public void deleteEnd() {
 
         Node n = head;
