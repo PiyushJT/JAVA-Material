@@ -17,7 +17,7 @@ import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 
-public class Program228 {
+public class Program228_229 {
 
     public static void main(String[] args) {
 
