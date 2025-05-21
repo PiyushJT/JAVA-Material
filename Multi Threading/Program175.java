@@ -1,55 +1,81 @@
 /*
 
-Write a complete multi-threaded program to meet following
-requirements:
-- Read matrix [A] m x n
-- Create m number of threads
-- Each thread computes summation of elements of one row,
-  i.e. ith row of the matrix is processed by ith thread. Where 0 <= i< m.
-- Print the results
+Create a program for class PVR having Total_seats as instance variable.
+Create  method for seat booking.
+Create two threads which try to book seat of PVR screen1 (common object).
+Use concept of synchronization.
 
 */
-
-import java.util.Scanner;
 
 public class Program175 {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        PVR m1 = new PVR();
 
-        int m = 2;
-        int n = 3;
+        BookMyShow b1 = new BookMyShow(m1, 6);
+        b1.setName("X");
 
-        int[][] matrix = new int[m][n];
+        PayTM b2 = new PayTM(m1, 8);
+        b2.setName("Y");
 
-
-        for(int i = 0; i < m; i++)
-            for(int j = 0; j < n; j++)
-                matrix[i][j] = sc.nextInt();
-
-
-        for (int i = 0; i < m; i++){
-            RowSum rs = new RowSum(matrix[i]);
-            rs.start();
-        }
-
+        b1.start();
+        b2.start();
     }
 
 }
 
-class RowSum extends Thread{
-    int[] row;
-    int sum = 0;
+class PVR {
+    int total_seats = 10;
 
-    RowSum(int[] row){
-        this.row = row;
+    synchronized public void bookTicket(int seats){
+
+        String threadName = Thread.currentThread().getName();
+
+        if (total_seats >= seats) {
+            System.out.println(threadName + "'s " + seats + " tickets booked successfully");
+
+            total_seats -= seats;
+        }
+        else {
+            System.out.println(
+                    threadName + "'s ticket not booked. only " + total_seats + " tickets left"
+            );
+        }
+
+    }
+}
+
+
+
+
+class BookMyShow extends Thread{
+    PVR m1;
+    int seats;
+
+    BookMyShow(PVR m1, int seats){
+        this.m1 = m1;
+        this.seats = seats;
     }
 
     public void run(){
-        for(int i : row)
-            sum += i;
-        System.out.println("Sum of row is " + sum);
+        m1.bookTicket(seats);
+    }
+
+}
+
+
+class PayTM extends Thread{
+    PVR m1;
+    int seats;
+
+    PayTM(PVR m1, int seats){
+        this.m1 = m1;
+        this.seats = seats;
+    }
+
+    public void run(){
+        m1.bookTicket(seats);
     }
 
 }

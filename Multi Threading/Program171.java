@@ -1,73 +1,43 @@
 /*
 
-Write an application that read limit from user and executes two threads.
-One thread displays total of first n even numbers & another
-thread displays total of first n odd numbers.
-Create the threads by implementing the Runnable interface
+Write a program to create two thread one display
+alphabet from a to z and other will display
+numbers from 1 to 100
 
 */
 
-import java.util.Scanner;
-
 public class Program171 {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Alpha a = new Alpha();
+        Num n = new Num();
 
-        System.out.print("Enter number limit: ");
-        int n = sc.nextInt();
-
-        SumOdd so = new SumOdd(n);
-        SumEven se = new SumEven(n);
-
-        Thread odd = new Thread(so);
-        Thread even = new Thread(se);
-
-        odd.start();
-        even.start();
+        a.start();
+        n.start();
 
     }
 
 }
 
+class Alpha extends Thread {
 
-class SumOdd implements Runnable {
+    public void run(){
 
-    int n;
-    int total = 0;
-
-    SumOdd(int n){
-        this.n = n;
-    }
-
-    public void run() {
-
-        for (int i = 1; i <= n; i += 2)
-            total += i;
-
-        System.out.println("Total of Odd is " + total);
+        for (char c = 'A'; c <= 'Z'; c++)
+            System.out.print(c + " ");
 
     }
 
 }
 
-class SumEven implements Runnable {
+class Num extends Thread {
 
-    int n;
-    int total = 0;
+    public void run(){
 
-    SumEven(int n){
-        this.n = n;
+        for (int i = 1; i <= 100; i++)
+            System.out.print(i + " ");
+
     }
-
-    public void run() {
-
-        for (int i = 2; i <= n; i += 2)
-            total += i;
-
-        System.out.println("Total of Even is " + total);
-    }
-
 
 }

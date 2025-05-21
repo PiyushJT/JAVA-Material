@@ -1,51 +1,54 @@
 /*
 
-It's IPL 2023 time. In this process of IPL-23 there is a thread called Bowler.
-This Bowler is going to create two threads with name – “Yorker” and “googly”.
-Write a java program to perform following task with each thread.
-Task 1 : if the thread name is "yorker" then it should print "SIXER"
-Task 2 : if the thread name is "googly" then it should print "WICKET"
-Make sure first thread bowl must be yorker.
-When execution of first thread is completed then and only then
-second bowl googly should work.
-Hint: Here Bowler is a Thread Class.
-and It must have execution of SIXER AND WICKET.
-Both yorker and googly must be from Bowler Thread Only.
-Give name IPL to the class of Main method.
+Write an application that executes two threads. One thread displays "Good Morning" every
+1000 milliseconds & another thread displays "Good Afternoon" every 3000 milliseconds for 10 times..
+Create the threads by implementing the Runnable interface.
 
 */
 
 public class Program165 {
+    public static void main(String[] args) {
 
-    public static void main(String[] args) throws InterruptedException {
+        Mor m = new Mor();
+        Aft a = new Aft();
 
-        Bowler y = new Bowler("Yorker");
-        Bowler g = new Bowler("googly");
+        Thread mor = new Thread(m);
+        Thread aft = new Thread(a);
 
-        y.start();
-        y.join();
-        g.start();
+        mor.start();
+        aft.start();
 
     }
 
 }
 
-class Bowler extends Thread {
+class Mor implements Runnable {
 
-    Bowler(String name){
-        super(name);
+    public void run() {
+
+        for (int i = 1; i <= 10; i++)
+            try {
+                System.out.println(i + " Good Morning");
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+
     }
 
+}
 
-    public void run(){
+class Aft implements Runnable {
 
-        String threadName = Thread.currentThread().getName();
+    public void run() {
 
-        if(threadName.equalsIgnoreCase("Yorker"))
-            System.out.println("SIXER");
-        else if(threadName.equalsIgnoreCase("googly"))
-            System.out.println("WICKET");
-
+        for (int i = 1; i <= 10; i++)
+            try {
+                System.out.println(i + " Good Afternoon");
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
 
     }
 

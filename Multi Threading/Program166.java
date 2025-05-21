@@ -1,54 +1,45 @@
 /*
 
-Write an application that executes two threads. One thread displays "Good Morning" every
-1000 milliseconds & another thread displays "Good Afternoon" every 3000 milliseconds for 10 times..
-Create the threads by implementing the Runnable interface.
+Write a program to create two threads,
+one thread will print odd numbers and
+second thread will print even numbers
+between 1 to 100 numbers
 
 */
 
 public class Program166 {
+
     public static void main(String[] args) {
 
-        Mor m = new Mor();
-        Aft a = new Aft();
+        PrintOdd po = new PrintOdd();
+        PrintEven pe = new PrintEven();
 
-        Thread mor = new Thread(m);
-        Thread aft = new Thread(a);
+        po.start();
+        pe.start();
 
-        mor.start();
-        aft.start();
 
     }
 
 }
 
-class Mor implements Runnable {
+
+class PrintOdd extends Thread {
 
     public void run() {
 
-        for (int i = 1; i <= 10; i++)
-            try {
-                System.out.println(i + " Good Morning");
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+        for (int i = 1; i <= 100; i += 2)
+            System.out.println(i);
 
     }
 
 }
 
-class Aft implements Runnable {
+class PrintEven extends Thread {
 
     public void run() {
 
-        for (int i = 1; i <= 10; i++)
-            try {
-                System.out.println(i + " Good Afternoon");
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+        for (int i = 2; i <= 100; i += 2)
+            System.out.println(i);
 
     }
 

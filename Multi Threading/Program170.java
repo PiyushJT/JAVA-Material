@@ -1,66 +1,73 @@
 /*
 
-Write a multithreaded program to print all odd
-positive numbers in ascending order up to n,
-where n is a positive integer number given as
-a command line argument.
-Instantiate requited number of threads, where each thread
-except the last, examines next 50 numbers
-and the last thread examines remaining numbers up to n
+Write an application that read limit from user and executes two threads.
+One thread displays total of first n even numbers & another
+thread displays total of first n odd numbers.
+Create the threads by implementing the Runnable interface
 
 */
+
+import java.util.Scanner;
 
 public class Program170 {
 
     public static void main(String[] args) throws InterruptedException {
 
-        int start = 1;
-        int size = 50;
+        Scanner sc = new Scanner(System.in);
 
-        // int n = Integer.parseInt(args[0]);
-        int n = 120;
+        System.out.print("Enter number limit: ");
+        int n = sc.nextInt();
 
-        while (n > 0) {
+        SumOdd so = new SumOdd(n);
+        SumEven se = new SumEven(n);
 
-            // min from 50 and remaining numbers
-            int end = Math.min(start + size - 1, start + n - 1);
+        Thread odd = new Thread(so);
+        Thread even = new Thread(se);
 
-            // declaring the Thread with bounds
-            PrintOdd2 p = new PrintOdd2(start, end);
-
-            p.start();
-
-            // waiting for first thread to complete
-            p.join();
-
-            // Decrementing the given range
-            n -= (end - start + 1);
-
-            // Incrementing the initial bound
-            start = end + 1;
-
-        }
+        odd.start();
+        even.start();
 
     }
 
 }
 
 
-class PrintOdd2 extends Thread {
-    int n1;
-    int n2;
+class SumOdd implements Runnable {
 
-    PrintOdd2(int n1, int n2) {
-        this.n1 = n1;
-        this.n2 = n2;
+    int n;
+    int total = 0;
+
+    SumOdd(int n){
+        this.n = n;
     }
 
     public void run() {
 
-        for (int i = n1; i <= n2; i++)
-            if (i % 2 == 1)
-                System.out.print(i + " ");
+        for (int i = 1; i <= n; i += 2)
+            total += i;
+
+        System.out.println("Total of Odd is " + total);
 
     }
+
+}
+
+class SumEven implements Runnable {
+
+    int n;
+    int total = 0;
+
+    SumEven(int n){
+        this.n = n;
+    }
+
+    public void run() {
+
+        for (int i = 2; i <= n; i += 2)
+            total += i;
+
+        System.out.println("Total of Even is " + total);
+    }
+
 
 }

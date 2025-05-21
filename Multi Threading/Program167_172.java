@@ -11,7 +11,7 @@ o Each thread produces 5 information.
 
 */
 
-public class Program168_173 {
+public class Program167_172 {
 
     public static void main(String[] args) {
 

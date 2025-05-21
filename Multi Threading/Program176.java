@@ -1,9 +1,10 @@
 /*
 
-Create a program for class PVR having Total_seats as instance variable.
-Create  method for seat booking.
-Create two threads which try to book seat of PVR screen1 (common object).
-Use concept of synchronization.
+Make caller thread by extending thread class which calls synchronized
+receiver method available in receiver class.
+Make two threads of Caller  and display message "Ringing"
+and thread name  according to thread.
+Thread name must be Caller1 and Caller2.
 
 */
 
@@ -11,71 +12,38 @@ public class Program176 {
 
     public static void main(String[] args) {
 
-        PVR m1 = new PVR();
+        Caller Caller1 = new Caller("Caller 1");
+        Caller Caller2 = new Caller("Caller 2");
 
-        BookMyShow b1 = new BookMyShow(m1, 6);
-        b1.setName("X");
+        Caller1.start();
+        Caller2.start();
 
-        PayTM b2 = new PayTM(m1, 8);
-        b2.setName("Y");
 
-        b1.start();
-        b2.start();
     }
 
 }
 
-class PVR {
-    int total_seats = 10;
+class Caller extends Thread {
 
-    synchronized public void bookTicket(int seats){
+    Receiver receiver = new Receiver();
 
-        String threadName = Thread.currentThread().getName();
-
-        if (total_seats >= seats) {
-            System.out.println(threadName + "'s " + seats + " tickets booked successfully");
-
-            total_seats -= seats;
-        }
-        else {
-            System.out.println(
-                    threadName + "'s ticket not booked. only " + total_seats + " tickets left"
-            );
-        }
-
-    }
-}
-
-
-
-
-class BookMyShow extends Thread{
-    PVR m1;
-    int seats;
-
-    BookMyShow(PVR m1, int seats){
-        this.m1 = m1;
-        this.seats = seats;
+    Caller(String name) {
+        super(name);
     }
 
-    public void run(){
-        m1.bookTicket(seats);
+    public void run() {
+        receiver.receiver();
+        System.out.println("Ringing");
     }
 
 }
 
+class Receiver {
 
-class PayTM extends Thread{
-    PVR m1;
-    int seats;
+    public synchronized void receiver() {
 
-    PayTM(PVR m1, int seats){
-        this.m1 = m1;
-        this.seats = seats;
-    }
+        System.out.println("Call Received by " + Thread.currentThread().getName());
 
-    public void run(){
-        m1.bookTicket(seats);
     }
 
 }
