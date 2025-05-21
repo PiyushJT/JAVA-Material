@@ -6,7 +6,6 @@ Write a Java program to copy one array list into another.
 */
 
 import static java.util.Arrays.asList;
-
 import java.util.*;
 
 public class Program231 {
