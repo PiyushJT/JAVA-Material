@@ -6,7 +6,8 @@ public class Test2 {
 
     public static void main(String[] args) throws IOException {
 
-        File f = new File("scratch.txt");
+        File f = new File("/Users/piyushthummar/Library/CloudStorage/GoogleDrive-piyushthummar7@gmail.com/My Drive/College/Sem 2/student.txt");
+
 
         FileReader fl = new FileReader(f);
 
