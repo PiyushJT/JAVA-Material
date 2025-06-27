@@ -2,39 +2,29 @@ public class LLTest {
 
     public static void main(String[] args) {
 
-        SinglyLinkedList l = new SinglyLinkedList();
+        DoublyLinkedList l = new DoublyLinkedList();
 
 
-        l.insertEnd(10);
-        l.insertEnd(40);
-        l.insertEnd(30);
-        l.insertEnd(50);
-        l.insertEnd(20);
+        l.insertLast(10);
+        l.insertLast(20);
+        l.insertLast(30);
+        l.insertLast(40);
+        l.insertLast(50);
 
+        l.getMax();
 
-        l.insertAfter(20, 25);
-        l.insertAfter(30, 35);
-        l.insertAfter(0, 45);
-
-        l.display();
-
-        l.swap(7);
+        l.insertSorted(15);
+        l.insertSorted(0);
+        l.insertSorted(60);
+        l.insertSorted(35);
 
         l.display();
-
-        l.sort();
-
-        l.display();
-
-        SinglyLinkedList l2 = l.copy();
-
-        l2.display();
-        l2.deleteVal(25);
-
-        l.display();
-        l2.display();
+        l.getMax();
 
 
+        l.printReverse();
+
+        l.printOdd();
 
     }
 
