@@ -50,6 +50,25 @@ public class DoublyLinkedList {
     }
 
 
+    void reverse(){
+
+        Node temp = null;
+        Node current = head;
+
+        while (current != null) {
+
+            temp = current.prev;
+
+            current.prev = current.next;
+            current.next = temp;
+            current = current.prev;
+        }
+
+        if(temp != null )
+            head = temp.prev;
+
+    }
+
     int deleteFirst() {
 
         if (head == null)

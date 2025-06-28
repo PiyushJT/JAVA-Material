@@ -26,6 +26,10 @@ public class LLTest {
 
         l.printOdd();
 
+        l.display();
+        l.reverse();
+        l.display();
+
 
         System.out.println();
         System.out.println();
