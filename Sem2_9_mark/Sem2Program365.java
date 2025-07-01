@@ -60,7 +60,7 @@ public class Sem2Program365 {
 
     public static void main(String[] args) {
 
-
+        String s;
 
     }
 
