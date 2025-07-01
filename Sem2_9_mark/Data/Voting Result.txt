@@ -1,0 +1,79 @@
+	Captain Details
+
+Name      Age  Team
+Rohit     32   MI     
+Hardik    31   GT     
+Dhoni     39   CSK    
+Rishabh   29   DC     
+Virat     30   RCB    
+
+
+	Voting Sequence
+
+Name      Voted To
+Voter-1   Hardik 
+Voter-2   Dhoni  
+Voter-3   Rishabh
+Voter-4   Rishabh
+Voter-5   Virat  
+Voter-6   Virat  
+Voter-7   Virat  
+Voter-8   Rohit  
+Voter-9   Dhoni  
+Voter-10  Hardik 
+Voter-11  Virat  
+Voter-12  Rohit  
+Voter-13  Virat  
+Voter-14  Hardik 
+Voter-15  Rohit  
+Voter-16  Rishabh
+Voter-17  Virat  
+Voter-18  Virat  
+Voter-19  Rohit  
+Voter-20  Rishabh
+Voter-21  Hardik 
+Voter-22  Virat  
+Voter-23  Rohit  
+Voter-24  Dhoni  
+Voter-25  Dhoni  
+Voter-26  Virat  
+Voter-27  Rohit  
+Voter-28  Rohit  
+Voter-29  Virat  
+Voter-30  Hardik 
+Voter-31  Virat  
+Voter-32  Rohit  
+Voter-33  Virat  
+Voter-34  Hardik 
+Voter-35  Virat  
+Voter-36  Rohit  
+Voter-37  Rishabh
+Voter-38  Dhoni  
+Voter-39  Dhoni  
+Voter-40  Dhoni  
+Voter-41  Virat  
+Voter-42  Dhoni  
+Voter-43  Hardik 
+Voter-44  Rohit  
+Voter-45  Virat  
+Voter-46  Virat  
+Voter-47  Dhoni  
+Voter-48  Rohit  
+Voter-49  Rishabh
+Voter-50  Dhoni  
+
+
+	Final Voting Results
+
+Name      Votes  
+Virat     16     
+Rohit     11     
+Dhoni     10     
+Hardik    7      
+Rishabh   6      
+
+
+	Winner
+
+Name      Age   Team   Votes   Percentage
+Virat     30    RCB    16      32  
