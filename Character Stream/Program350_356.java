@@ -12,32 +12,11 @@ public class Program350_356 {
 
     public static void main(String[] args) throws Exception {
 
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
-
-        System.out.println("Enter src file");
-        String src = "Data/" + br.readLine();
-        src = "Data/src.txt";
-
-        System.out.println("Enter dest file");
-        String dest = "Data/" + br.readLine();
-        dest = "Data/dest.txt";
-
-
-        File srcFile = new File(src);
-        File destFile = new File(dest);
-
-        BufferedReader reader = new BufferedReader(new FileReader(srcFile));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(destFile));
-
-        char[] ch = new char[(int) srcFile.length()];
-
-        reader.read(ch);
-
-        writer.write(ch);
-
-        reader.close();
-        writer.close();
+        RandomAccessFile raf = new RandomAccessFile("input.txt", "r");
+        byte[] bytes = new byte[12];
+        raf.read(bytes, 8, 3);
+        raf.close();
+        System.out.println(new String(bytes));
 
     }
 
