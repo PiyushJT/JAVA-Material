@@ -1,15 +1,17 @@
 /*
 
-Consider a table with name – student and database as admission.
-The student table have fields like stdId, stdName, stdMarks(float).
-Write a java program that adds 2 records using PreparedStatement.
-[have to write connection code here.]
+Write a Java code for the following task.
+- Table Name : student  : std_id, std_roll_no, std_name, std_marks,
+std_div
+- DB : LJU
+- Insert 5 Records using prepared statement.
+- Update Div of students having marks > 50  - To - Div B - Use callable statement for this
 
 */
 
 import java.sql.*;
 
-public class Program401 {
+public class Program428 {
 
     public static void main(String[] args) throws Exception {
 
