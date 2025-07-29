@@ -198,8 +198,26 @@ public class BinarySearchTree {
 
 
 
+    boolean find(int data) {
+        return findElement(root, data);
+    }
 
 
+    boolean findElement(Node root, int data) {
+
+        if (root == null)
+            return false;
+
+        if (data < root.data)
+            return findElement(root.left, data);
+
+        else if (data > root.data)
+            return findElement(root.right, data);
+
+        else
+            return true;
+
+    }
 
 
 

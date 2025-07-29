@@ -34,6 +34,9 @@ public class BSTTesting {
         System.out.println("Postorder: ");
         bst.postOrder();
 
+        System.out.println("find 2: " + bst.find(2));
+        System.out.println("find 10: " + bst.find(10));
+
     }
 
 }
