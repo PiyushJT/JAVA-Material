@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Java Programs</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/PiyushJT/PiyushJT/refs/heads/main/icon.ico">
+    <link rel="icon" href="https://raw.githubusercontent.com/PiyushJT/PiyushJT/00ca33b80496d6ca543332f53b314e62ddf3e37b/icons/java.svg" type="image/svg+xml">
+    <meta name="description" content="Browse and search the PiyushJT/Java-Material GitHub repository">
+    <style>
+      :root {
+        --bg: #0f1115;        /* flat background */
+        --bg-elev: #0f1115;   /* same as bg for flat look */
+        --panel: #171a20;     /* simple panel */
+        --panel-2: #1e222a;   /* hover panel */
+        --text: #e6eaf0;      /* primary text */
+        --muted: #9aa4b2;     /* muted text */
+        --accent: #4f8cff;    /* single accent */
+        --accent-2: #4f8cff;  /* keep single tone */
+        --danger: #ef6666;
+        --border: #2a2f3a;    /* subtle borders */
+        --shadow: 0 4px 16px rgba(0,0,0,0.18); /* softer */
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .app {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: 280px 1fr;
+        grid-template-areas:
+          "header header"
+          "sidebar main";
+        height: 100dvh;
+      }
+
+      header {
+        grid-area: header;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 18px;
+        background: var(--panel);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
+      }
+
+      .brand .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .brand .title {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      .search {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 900px;
+        margin-left: auto;
+      }
+
+      .search input[type="search"] {
+        width: 100%;
+        padding: 12px 14px 12px 40px;
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        outline: none;
+        transition: border-color .2s ease, box-shadow .2s ease;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      }
+
+      .search input[type="search"]:focus {
+        border-color: rgba(96,165,250,0.6);
+        box-shadow: 0 0 0 4px rgba(96,165,250,0.12);
+      }
+
+      .search .icon {
+        position: relative;
+        left: 34px;
+        pointer-events: none;
+        color: var(--muted);
+      }
+
+      aside.sidebar {
+        grid-area: sidebar;
+        background: var(--panel);
+        border-right: 1px solid var(--border);
+        overflow: auto;
+      }
+
+      .sidebar .section {
+        padding: 14px 14px 8px 14px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .tree {
+        list-style: none;
+        margin: 0;
+        padding: 6px 8px 18px 8px;
+      }
+
+      .tree li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 8px;
+        margin: 10px 6px;
+        padding: 8px 10px;
+        cursor: pointer;
+        color: var(--text);
+      }
+
+      .tree li:hover {
+        background: var(--panel-2);
+      }
+
+      .tree .icon {
+        width: 18px;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+      }
+
+      main.content {
+        grid-area: main;
+        padding: 18px 22px 28px 22px;
+        overflow: auto;
+      }
+
+      .crumbs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 12px;
+        color: var(--muted);
+      }
+
+      .crumbs a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .listing {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 10px;
+        padding: 8px;
+      }
+
+      .listing .row {
+        display: contents;
+      }
+
+      .listing .cell {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .listing .row:hover .cell {
+        background: var(--panel-2);
+      }
+
+      .viewer {
+        padding: 12px 14px;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+        color: #dbeafe;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+
+
+      .viewer .toolbar {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .viewer .btn {
+        padding: 6px 10px;
+        background: var(--panel-2);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .viewer .btn:hover {
+        filter: brightness(1.05);
+      }
+
+
+      /* Code block with line numbers and wrapping */
+      .viewer .codeblock {
+        display: block;
+        font-size: 14px;
+      }
+
+      .viewer .code-line {
+        display: grid;
+        grid-template-columns: minmax(2ch, 4ch) 1fr;
+        gap: 12px;
+        align-items: start;
+      }
+      .viewer .ln {
+        color: var(--muted);
+        text-align: right;
+        user-select: none;
+        opacity: 0.85;
+      }
+      .viewer .code {
+        white-space: pre-wrap; /* allow wrapping */
+        word-break: break-word; /* break long tokens on mobile */
+      }
+
+      /* Syntax highlighting (Java-oriented) */
+      .tok-comment { color: #7f8fa3; font-style: italic; }
+      .tok-string  { color: #a4d88f; }
+      .tok-keyword { color: #8ab4ff; }
+      .tok-builtin { color: #f6c177; }
+      .tok-number  { color: #f29e74; }
+      .tok-decorator { color: #c084fc; }
+      .tok-defname, .tok-classname { color: #53d3f3; }
+
+      .viewer .note {
+        color: var(--muted);
+        margin-bottom: 8px;
+        font-size: 22px;
+      }
+
+      .results {
+        padding: 8px 10px 16px 10px;
+      }
+
+      .results .hit {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin: 8px 0;
+        background: var(--panel-2);
+      }
+
+      .results .hit .path {
+        color: var(--accent);
+        cursor: pointer;
+      }
+
+      .hl {
+        background: rgba(96,165,250,0.18);
+        border-bottom: 1px solid rgba(96,165,250,0.45);
+        border-radius: 4px;
+        padding: 0 2px;
+      }
+
+      .empty {
+        color: var(--muted);
+        padding: 10px;
+      }
+
+      .kbd {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: #0e1217;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .rootLink {
+        color: white;
+        text-decoration: none;
+      }
+
+      @media (max-width: 980px) {
+        .app {
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "header"
+            "main";
+        }
+        aside.sidebar {
+          display: none;
+        }
+
+        .codeblock {
+            font-size: 10px;
+        }
+      
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <div class="brand" title="PiyushJT/Java-Material">
+            <div class="title">
+                <a class="rootLink" href="https://piyushjt.github.io/Java-Material/">Java Progs</a>
+            </div>
+        </div>
+        <form class="search" id="searchForm">
+          <span class="icon" aria-hidden="true">🔎</span>
+          <input id="searchInput" type="search" placeholder="Code, Problem, File, etc" autocomplete="off" />
+        </form>
+      </header>
+
+      <aside class="sidebar">
+        <div class="section">Folders</div>
+        <ul class="tree" id="rootTree"></ul>
+      </aside>
+
+      <main class="content">
+        <nav class="crumbs" id="breadcrumbs"></nav>
+        <section class="panel" id="panel">
+          <div id="panelInner"></div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const OWNER = "PiyushJT";
+      const REPO = "Java-Material";
+
+      const state = {
+        defaultBranch: "main",
+        treeByPath: new Map(),
+        nodeByPath: new Map(),
+        contentCache: new Map(),
+        fileIndex: [],
+        searchAbort: null,
+        prefetchStarted: false
+      };
+
+      function $(id) { return document.getElementById(id); }
+
+      function toQuery(params) {
+        const usp = new URLSearchParams();
+        Object.entries(params).forEach(([k, v]) => {
+          if (v !== undefined && v !== null && v !== "") usp.set(k, v);
+        });
+        return `?${usp.toString()}`;
+      }
+
+      function parseLocation() {
+        const usp = new URLSearchParams(location.search);
+        return {
+          view: usp.get("view") || "folder",
+          path: usp.get("p") || "",
+          q: usp.get("q") || ""
+        };
+      }
+
+      function navigate(newState, replace = false) {
+        const query = toQuery(newState);
+        const url = `${location.pathname}${query}`;
+        if (replace) history.replaceState(null, "", url); else history.pushState(null, "", url);
+        render();
+      }
+
+      async function fetchJSON(url, init) {
+        const res = await fetch(url, init);
+        if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+        return await res.json();
+      }
+
+      async function init() {
+        const meta = await fetchJSON(`https://api.github.com/repos/${OWNER}/${REPO}`);
+        state.defaultBranch = meta.default_branch || "main";
+
+        const tree = await fetchJSON(`https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${encodeURIComponent(state.defaultBranch)}?recursive=1`);
+        buildIndexes(tree);
+        renderRootSidebar();
+        render(true);
+        if (!state.prefetchStarted) {
+          state.prefetchStarted = true;
+          prefetchSmallFiles().catch(() => {});
+        }
+      }
+
+      function buildIndexes(tree) {
+        const root = { type: "tree", name: "", path: "", children: new Map() };
+        state.nodeByPath.set("", root);
+
+        for (const entry of tree.tree) {
+          const parts = entry.path.split("/");
+          let cursor = root;
+          for (let i = 0; i < parts.length; i++) {
+            const name = parts[i];
+            const isLast = i === parts.length - 1;
+            const childPath = parts.slice(0, i + 1).join("/");
+            let existing = cursor.children.get(name);
+            if (!existing) {
+              existing = {
+                type: isLast ? (entry.type === "tree" ? "tree" : "blob") : "tree",
+                name,
+                path: childPath,
+                children: new Map(),
+                sha: isLast ? entry.sha : undefined
+              };
+              cursor.children.set(name, existing);
+              state.nodeByPath.set(childPath, existing);
+            }
+            cursor = existing;
+          }
+        }
+
+        state.treeByPath = state.nodeByPath; // alias
+
+        const files = [];
+        for (const node of state.nodeByPath.values()) {
+          if (node.type === "blob") files.push(node);
+        }
+        state.fileIndex = files.sort((a, b) => a.path.localeCompare(b.path));
+      }
+
+      function renderRootSidebar() {
+        const rootNode = state.nodeByPath.get("");
+        const ul = $("rootTree");
+        ul.innerHTML = "";
+        const dirs = Array.from(rootNode.children.values()).filter(n => n.type === "tree").sort((a, b) => a.name.localeCompare(b.name));
+        for (const dir of dirs) {
+          const li = document.createElement("li");
+          li.innerHTML = `<span class="icon">📁</span><span>${dir.name}</span>`;
+          li.addEventListener("click", () => navigate({ view: "folder", p: dir.path }));
+          ul.appendChild(li);
+        }
+      }
+
+      function render(replacing = false) {
+        const { view, path, q } = parseLocation();
+        renderBreadcrumbs(view, path, q);
+        const panelInner = $("panelInner");
+        if (view === "folder") {
+          renderFolder(path, panelInner);
+        } else if (view === "file") {
+          renderFile(path, panelInner);
+        } else if (view === "search") {
+          renderSearch(q, panelInner);
+        } else {
+          renderFolder("", panelInner);
+        }
+      }
+
+      function renderBreadcrumbs(view, path, q) {
+        const bc = $("breadcrumbs");
+        bc.innerHTML = "";
+        const add = (label, st) => {
+          const a = document.createElement("a");
+          a.href = "javascript:void(0)";
+          a.textContent = label;
+          a.addEventListener("click", () => navigate(st));
+          bc.appendChild(a);
+        };
+        add("Repo", { view: "folder", p: "" });
+        if (view === "search") {
+          const span = document.createElement("span");
+          span.textContent = ` / Search: ${q}`;
+          bc.appendChild(span);
+          return;
+        }
+        const parts = path ? path.split("/") : [];
+        let acc = "";
+        for (let i = 0; i < parts.length; i++) {
+          acc = i === 0 ? parts[0] : `${acc}/${parts[i]}`;
+          const isLast = i === parts.length - 1;
+          const label = ` / ${parts[i]}`;
+          if (!isLast || view === "folder") add(label, { view: "folder", p: acc });
+          else add(label, { view: "file", p: acc });
+        }
+      }
+
+      function renderFolder(path, container) {
+        const node = state.nodeByPath.get(path || "");
+        if (!node || node.type !== "tree") {
+          navigate({ view: "folder", p: "" }, true);
+          return;
+        }
+
+        const entries = Array.from(node.children.values());
+        const folders = entries
+          .filter(e => e.type === "tree")
+          .sort((a, b) => a.name.localeCompare(b.name));
+        const files = entries
+          .filter(e => e.type === "blob")
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        const showFiles = path !== ""; // Only root -> show only folders
+
+        const list = document.createElement("ul");
+        list.className = "tree";
+
+        function addItem(item, isDir) {
+          const li = document.createElement("li");
+          li.innerHTML = `<span class="icon">${isDir ? "📁" : "📄"}</span><span>${item.name}</span>`;
+          li.addEventListener("click", () => navigate({ view: isDir ? "folder" : "file", p: item.path }));
+          list.appendChild(li);
+        }
+
+        folders.forEach(f => addItem(f, true));
+        if (showFiles) files.forEach(f => addItem(f, false));
+
+        container.innerHTML = "";
+        container.appendChild(list);
+      }
+
+      async function renderFile(path, container) {
+        const node = state.nodeByPath.get(path);
+        if (!node || node.type !== "blob") {
+          navigate({ view: "folder", p: "" }, true);
+          return;
+        }
+        const key = `${state.defaultBranch}:${path}`;
+        const fileName = path.split('/').pop().split('.').slice(0, -1).join('.');
+        const prog = fileName.slice(0, 7) + " " + fileName.slice(7);
+
+        let content = state.contentCache.get(key);
+        if (!content) {
+          const url = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${encodeURIComponent(state.defaultBranch)}/${encodeURI(path)}`;
+          const res = await fetch(url);
+          if (!res.ok) {
+            container.innerHTML = `<div class="viewer"><div class="note">Unable to fetch file.</div></div>`;
+            return;
+          }
+          content = await res.text();
+          state.contentCache.set(key, content);
+        }
+        const viewer = document.createElement("div");
+        viewer.className = "viewer";
+        viewer.innerHTML = `<div class="note">${prog}</div>`;
+        const toolbar = document.createElement("div");
+        toolbar.className = "toolbar";
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "btn";
+        copyBtn.type = "button";
+        copyBtn.textContent = "Copy code";
+        copyBtn.addEventListener("click", async () => {
+          const original = copyBtn.textContent;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(content);
+            } else {
+              const ta = document.createElement("textarea");
+              ta.value = content;
+              ta.style.position = "fixed";
+              ta.style.opacity = "0";
+              document.body.appendChild(ta);
+              ta.focus();
+              ta.select();
+              document.execCommand("copy");
+              document.body.removeChild(ta);
+            }
+            copyBtn.textContent = "Copied!";
+          } catch (_) {
+            copyBtn.textContent = "Failed";
+          } finally {
+            setTimeout(() => { copyBtn.textContent = original; }, 1200);
+          }
+        });
+        toolbar.appendChild(copyBtn);
+        const codeBlock = document.createElement("div");
+        codeBlock.className = "codeblock";
+        const isJava = /\.java$/i.test(path);
+        const lines = isJava ? highlightJavaLines(content) : escapeHtml(content).split("\n");
+        for (let i = 0; i < lines.length; i++) {
+          const row = document.createElement("div");
+          row.className = "code-line";
+          const ln = document.createElement("span");
+          ln.className = "ln";
+          ln.textContent = String(i + 1);
+          const code = document.createElement("span");
+          code.className = "code";
+          code.innerHTML = lines[i] === "" ? "&nbsp;" : lines[i];
+          row.appendChild(ln);
+          row.appendChild(code);
+          codeBlock.appendChild(row);
+        }
+        viewer.appendChild(toolbar);
+        viewer.appendChild(codeBlock);
+        container.innerHTML = "";
+        container.appendChild(viewer);
+      }
+
+      function escapeHtml(s) {
+        return s
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function highlightJavaLines(text) {
+        // Escape first
+        let src = escapeHtml(text);
+
+        // Placeholder-based protection to avoid overlapping replacements
+        const placeholders = [];
+        const put = (html) => {
+          const id = `@@T${placeholders.length}@@`;
+          placeholders.push(html);
+          return id;
+        };
+
+        // Block comments (multiline) and line comments
+        src = src.replace(/\/\*[\s\S]*?(?:\*\/|$)/g, (m) => put(`<span class="tok-comment">${m}</span>`));
+        src = src.replace(/(^|\s)(\/\/.*?$)/gm, (m, p1, p2) => `${p1}${put(`<span class=\"tok-comment\">${p2}</span>`)}`);
+
+        // Strings and char literals
+        src = src.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)')/g, (m) => put(`<span class="tok-string">${m}</span>`));
+
+        // Annotations (e.g., @Override, @org.example.Foo)
+        src = src.replace(/(^|\s)(@[_A-Za-z][._A-Za-z0-9]*)/gm, (m, p1, p2) => `${p1}${put(`<span class=\"tok-decorator\">${p2}</span>`)}`);
+
+        // Java keywords
+        const keywords = [
+          'abstract','assert','boolean','break','byte','case','catch','char','class','const','continue','default','do','double','else','enum','extends','final','finally','float','for','goto','if','implements','import','instanceof','int','interface','long','native','new','package','private','protected','public','return','short','static','strictfp','super','switch','synchronized','this','throw','throws','transient','try','void','volatile','while','record','sealed','permits','var'
+        ];
+        const kwRe = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+        src = src.replace(kwRe, '<span class="tok-keyword">$1</span>');
+
+        // Common builtins / types / utility classes (subset)
+        const builtins = ['String','System','Integer','Long','Double','Float','Short','Character','Boolean','Object','List','Map','Set','HashMap','HashSet','ArrayList','Arrays','Collections','Optional'];
+        const biRe = new RegExp(`\\b(${builtins.join('|')})\\b`, 'g');
+        src = src.replace(biRe, '<span class="tok-builtin">$1</span>');
+
+        // Numbers (hex, binary, octal, decimal with underscores and suffixes)
+        src = src.replace(/\b(0[xX][0-9a-fA-F_]+|0[bB][01_]+|0[0-7_]+|\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d[\d_]*)?[fFdDlL]?)\b/g, '<span class="tok-number">$1</span>');
+
+        // class/interface/enum names (run AFTER keyword replacements)
+        src = src.replace(/\b(class|interface|enum|record)(\s+)([_A-Za-z][\w_]*)/g, (m, kw, sp, name) => `<span class="tok-keyword">${kw}</span>${sp}<span class="tok-classname">${name}</span>`);
+
+        // Restore placeholders
+        src = src.replace(/@@T(\d+)@@/g, (_, idx) => placeholders[Number(idx)] || '');
+
+        return src.split('\n');
+      }
+
+      function cancelSearch() {
+        if (state.searchAbort) {
+          state.searchAbort.aborted = true;
+          state.searchAbort = null;
+        }
+      }
+
+      function highlight(text, q) {
+        if (!q) return text;
+        const esc = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        return text.replace(new RegExp(esc, "gi"), m => `<span class="hl">${m}</span>`);
+      }
+
+      async function renderSearch(query, container) {
+        cancelSearch();
+        const guard = { aborted: false };
+        state.searchAbort = guard;
+        const q = (query || "").trim();
+        if (!q) {
+          container.innerHTML = `<div class="empty">Type a query and press Enter. Try <span class="kbd">Program</span> or <span class="kbd">def</span>.</div>`;
+          return;
+        }
+
+        // Shell for incremental results
+        const shell = document.createElement("div");
+        shell.className = "results";
+        const fileNameHeader = document.createElement("div");
+        fileNameHeader.textContent = "Filename matches";
+        const fileNameGroup = document.createElement("div");
+
+        const contentHeader = document.createElement("div");
+        contentHeader.style.marginTop = "12px";
+        contentHeader.textContent = "Content matches";
+        const contentStatus = document.createElement("div");
+        contentStatus.className = "empty";
+        contentStatus.textContent = `Searching file contents for “${q}”…`;
+        const contentGroup = document.createElement("div");
+
+        shell.appendChild(fileNameHeader);
+        shell.appendChild(fileNameGroup);
+        shell.appendChild(contentHeader);
+        shell.appendChild(contentStatus);
+        shell.appendChild(contentGroup);
+        container.innerHTML = "";
+        container.appendChild(shell);
+
+        // 1) Immediate filename matches
+        const lower = q.toLowerCase();
+        const nameMatches = state.fileIndex.filter(f => f.path.toLowerCase().includes(lower));
+        if (nameMatches.length === 0) {
+          const none = document.createElement("div");
+          none.className = "empty";
+          none.textContent = "No filename matches.";
+          fileNameGroup.appendChild(none);
+        } else {
+          renderGroupedHits(nameMatches.map(file => ({ file, pathMatch: true, contentMatch: false, snippet: "" })), q, fileNameGroup);
+        }
+
+        // 2) Incremental content matches with concurrency limit
+        const remaining = state.fileIndex.filter(f => !nameMatches.includes(f));
+        const concurrency = 6;
+        let inFlight = 0; let index = 0; let foundAny = false;
+        const maxContentBytes = 200 * 1024;
+
+        const queueNext = async () => {
+          if (guard.aborted) return;
+          if (index >= remaining.length) {
+            if (inFlight === 0) {
+              contentStatus.textContent = foundAny ? "" : "No content matches.";
+            }
+            return;
+          }
+          const file = remaining[index++];
+          inFlight++;
+          try {
+            const key = `${state.defaultBranch}:${file.path}`;
+            let text = state.contentCache.get(key);
+            if (!text) {
+              const url = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${encodeURIComponent(state.defaultBranch)}/${encodeURI(file.path)}`;
+              const res = await fetch(url);
+              if (res.ok) {
+                const reader = res.body.getReader();
+                const chunks = [];
+                let received = 0;
+                while (true) {
+                  const { done, value } = await reader.read();
+                  if (done) break;
+                  chunks.push(value);
+                  received += value.byteLength;
+                  if (received > maxContentBytes) break;
+                }
+                const decoder = new TextDecoder("utf-8");
+                text = decoder.decode(concatUint8(chunks));
+                state.contentCache.set(key, text);
+              }
+            }
+            if (text && text.toLowerCase().includes(lower)) {
+              foundAny = true;
+              const idx = text.toLowerCase().indexOf(lower);
+              const start = Math.max(0, idx - 40);
+              const end = Math.min(text.length, idx + q.length + 40);
+              const snippet = text.slice(start, end).replace(/</g, "&lt;");
+              renderGroupedHits([{ file, pathMatch: false, contentMatch: true, snippet }], q, contentGroup, true);
+            }
+          } catch (e) {
+            // ignore
+          } finally {
+            inFlight--;
+            queueNext();
+          }
+        };
+        for (let i = 0; i < concurrency && i < remaining.length; i++) queueNext();
+      }
+
+      function concatUint8(chunks) {
+        const total = chunks.reduce((s, c) => s + c.byteLength, 0);
+        const out = new Uint8Array(total);
+        let off = 0;
+        for (const c of chunks) { out.set(c, off); off += c.byteLength; }
+        return out;
+      }
+
+      function renderGroupedHits(hits, q, container, append = false) {
+        const byDir = new Map();
+        for (const r of hits) {
+          const dir = r.file.path.includes("/") ? r.file.path.split("/").slice(0, -1).join("/") : "";
+          if (!byDir.has(dir)) byDir.set(dir, []);
+          byDir.get(dir).push(r);
+        }
+        const dirs = Array.from(byDir.keys()).sort();
+        if (!append) container.innerHTML = "";
+        for (const dir of dirs) {
+          let group = container.querySelector(`[data-group="${CSS.escape(dir)}"]`);
+          if (!group) {
+            group = document.createElement("div");
+            group.setAttribute("data-group", dir);
+            container.appendChild(group);
+          }
+          const items = byDir.get(dir).sort((a, b) => a.file.path.localeCompare(b.file.path));
+          for (const r of items) {
+            const hit = document.createElement("div");
+            hit.className = "hit";
+            const pathHtml = highlight(r.file.path, q);
+            const sn = r.snippet ? highlight(r.snippet, q) : "";
+            hit.innerHTML = `
+              <div class="path">${pathHtml}</div>
+              ${sn ? `<div class="snippet" style="color:var(--muted);margin-top:6px;">… ${sn} …</div>` : ""}
+            `;
+            hit.querySelector(".path").addEventListener("click", () => navigate({ view: "file", p: r.file.path }));
+            group.appendChild(hit);
+          }
+        }
+      }
+
+      async function prefetchSmallFiles() {
+        const candidates = state.fileIndex.slice(0, 50);
+        const concurrency = 4;
+        let index = 0; let inFlight = 0;
+        const maxBytes = 100 * 1024;
+
+        const step = async () => {
+          if (index >= candidates.length) return;
+          const file = candidates[index++];
+          inFlight++;
+          try {
+            const key = `${state.defaultBranch}:${file.path}`;
+            if (!state.contentCache.has(key)) {
+              const url = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${encodeURIComponent(state.defaultBranch)}/${encodeURI(file.path)}`;
+              const res = await fetch(url);
+              if (res.ok) {
+                const reader = res.body.getReader();
+                const chunks = [];
+                let received = 0;
+                while (true) {
+                  const { done, value } = await reader.read();
+                  if (done) break;
+                  chunks.push(value);
+                  received += value.byteLength;
+                  if (received > maxBytes) break;
+                }
+                const decoder = new TextDecoder("utf-8");
+                const text = decoder.decode(concatUint8(chunks));
+                state.contentCache.set(key, text);
+              }
+            }
+          } catch (e) { }
+          finally {
+            inFlight--;
+            step();
+          }
+        };
+        for (let i = 0; i < concurrency && i < candidates.length; i++) step();
+      }
+
+      $("searchForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const q = $("searchInput").value.trim();
+        navigate({ view: "search", q });
+      });
+
+      window.addEventListener("popstate", () => render());
+
+      document.addEventListener("DOMContentLoaded", () => {
+        init().catch(err => {
+          $("panelInner").innerHTML = `<div class="empty">Failed to load repository.</div>`;
+          console.error(err);
+        });
+      });
+    </script>
+  </body>
+</html>
+
+
