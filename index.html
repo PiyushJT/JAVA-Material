@@ -6,31 +6,106 @@
     <title>Java Programs</title>
     <link rel="icon" href="https://raw.githubusercontent.com/PiyushJT/PiyushJT/refs/heads/main/icon.ico">
     <link rel="icon" href="https://raw.githubusercontent.com/PiyushJT/PiyushJT/00ca33b80496d6ca543332f53b314e62ddf3e37b/icons/java.svg" type="image/svg+xml">
-    <meta name="description" content="Browse and search the PiyushJT/Java-Material GitHub repository">
-    <style>
+    <meta name="description" content="Browse and search the PiyushJT/JAVA-Material GitHub repository">
+   <style>
       :root {
-        --bg: #0f1115;        /* flat background */
-        --bg-elev: #0f1115;   /* same as bg for flat look */
-        --panel: #171a20;     /* simple panel */
-        --panel-2: #1e222a;   /* hover panel */
-        --text: #e6eaf0;      /* primary text */
-        --muted: #9aa4b2;     /* muted text */
-        --accent: #4f8cff;    /* single accent */
-        --accent-2: #4f8cff;  /* keep single tone */
-        --danger: #ef6666;
-        --border: #2a2f3a;    /* subtle borders */
-        --shadow: 0 4px 16px rgba(0,0,0,0.18); /* softer */
+        /* Darker, richer base with subtle depth */
+        --bg: #0b0d10;                /* page background */
+        --bg-elev: linear-gradient(180deg,#0f1114 0%, #0b0d10 100%);
+        --panel: rgba(18,20,24,0.7);  /* semi-opaque panels */
+        --panel-2: rgba(255,255,255,0.02); /* hover panel overlay */
+        --text: #e6eef8;             /* primary text (cool white) */
+        --muted: #9fb0c8;            /* muted (desaturated blue) */
+        --accent: #60a5fa;           /* primary accent (soft blue) */
+        --accent-2: #7dd3fc;         /* secondary accent (cyan) */
+        --accent-gradient: linear-gradient(90deg,#60a5fa,#7dd3fc);
+        --danger: #ff7b72;           /* warm danger */
+        --border: rgba(255,255,255,0.04); /* subtle light borders */
+        --shadow: 0 8px 30px rgba(3,6,12,0.6); /* deeper shadow for panels */
+        --glass: rgba(255,255,255,0.03);
+        --scrollbar-track: rgba(255,255,255,0.02);
+  --scrollbar-thumb: rgba(125,211,252,0.14);
+  --copied-color: #a3e635; /* lime-ish */
+  --mobile-header-height: 58px;
       }
 
       html, body {
         height: 100%;
+        background: var(--bg);
       }
+
+      /* Scrollbar styling: Firefox and WebKit/Blink */
+      /* Firefox */
+      * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }
+
+      /* WebKit */
+      ::-webkit-scrollbar { width: 12px; height: 12px; }
+      ::-webkit-scrollbar-track { background: var(--scrollbar-track); border-radius: 999px; }
+      ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: 999px;
+        border: 3px solid transparent; /* creates padding inside thumb */
+        background-clip: padding-box;
+      }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(125,211,252,0.2); }
 
       body {
         margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
         background: var(--bg);
         color: var(--text);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Cool animated background for home */
+      body.home {
+        background: radial-gradient(800px 500px at 10% 10%, rgba(96,165,250,0.06) 0%, transparent 20%),
+                    radial-gradient(700px 400px at 85% 20%, rgba(125,211,252,0.04), transparent 30%),
+                    var(--bg-elev);
+        background-attachment: fixed;
+        position: relative;
+      }
+
+      body.home::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at 10% 10%, rgba(125,211,252,0.02), transparent 15%), radial-gradient(circle at 90% 20%, rgba(96,165,250,0.02), transparent 20%);
+        opacity: 0.9;
+        pointer-events: none;
+        animation: drift 24s linear infinite;
+      }
+
+      @keyframes drift {
+        0% { transform: translate3d(0,0,0); }
+        100% { transform: translate3d(40px, 0, 0); }
+      }
+
+      /* Hide chrome and flatten layout on home */
+      body.home .app {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "main";
+        height: 100vh;
+        overflow: hidden;
+      }
+      body.home header,
+      body.home aside.sidebar,
+      body.home .crumbs {
+        display: none;
+      }
+      body.home main.content {
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+      }
+      body.home #panel {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        height: 100%;
+        overflow: hidden;
       }
 
       .app {
@@ -41,19 +116,21 @@
           "header header"
           "sidebar main";
         height: 100dvh;
+        transition: opacity .2s ease;
       }
 
+      /* Hide the app until first render to avoid layout flash */
+      body.preinit .app { opacity: 0; pointer-events: none; }
+
       header {
+        transition: transform 220ms cubic-bezier(.2,.8,.2,1);
         grid-area: header;
         display: flex;
         align-items: center;
         gap: 16px;
         padding: 14px 18px;
-        background: var(--panel);
-        border-bottom: 1px solid var(--border);
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        background: #0b0d10;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
       }
 
       .brand {
@@ -67,7 +144,8 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background: var(--accent);
+        background: var(--accent-2);
+        box-shadow: 0 0 8px rgba(96,165,250,0.18);
       }
 
       .brand .title {
@@ -82,19 +160,39 @@
         gap: 8px;
         max-width: 900px;
         margin-left: auto;
+        position: relative; /* for clear button */
       }
 
       .search input[type="search"] {
         width: 100%;
         padding: 12px 14px 12px 40px;
-        background: var(--panel);
+        background: rgba(255,255,255,0.02);
         color: var(--text);
-        border: 1px solid var(--border);
-        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 12px;
         outline: none;
-        transition: border-color .2s ease, box-shadow .2s ease;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        transition: border-color .16s ease, box-shadow .16s ease, transform .12s ease;
+        box-shadow: inset 0 2px 8px rgba(3,6,12,0.6);
       }
+
+      /* Hide native clear (X) */
+      input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; height: 0; width: 0; }
+
+      /* Clear button shared styles */
+      .clearBtn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: 1px solid transparent;
+        padding: 4px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: none;
+      }
+  .clearBtn:hover { background: rgba(96,165,250,0.08); transform: translateY(-1px); }
+      .clearBtn img { width: 16px; height: 16px; opacity: 0.9; }
 
       .search input[type="search"]:focus {
         border-color: rgba(96,165,250,0.6);
@@ -110,8 +208,8 @@
 
       aside.sidebar {
         grid-area: sidebar;
-        background: var(--panel);
-        border-right: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0));
+        border-right: 1px solid rgba(255,255,255,0.03);
         overflow: auto;
       }
 
@@ -153,6 +251,13 @@
         color: var(--muted);
       }
 
+      .tree .icon img {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+        opacity: 0.9;
+      }
+
       main.content {
         grid-area: main;
         padding: 18px 22px 28px 22px;
@@ -164,7 +269,7 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 6px;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         color: var(--muted);
       }
 
@@ -174,9 +279,9 @@
       }
 
       .panel {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0));
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 14px;
         box-shadow: var(--shadow);
       }
 
@@ -201,34 +306,52 @@
       }
 
       .viewer {
-        padding: 12px 14px;
-        line-height: 1.55;
+        padding: 18px 20px;
+        line-height: 1.6;
         overflow-wrap: anywhere;
-        color: #dbeafe;
+        color: #d7eefc;
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        position: relative;
+        background: rgba(255,255,255,0.01);
+        border-radius: 10px;
       }
-
 
       .viewer .toolbar {
         display: flex;
         justify-content: flex-end;
         gap: 8px;
         margin-bottom: 10px;
+        position: absolute;
+        top: 8px;
+        right: 10px;
       }
 
       .viewer .btn {
-        padding: 6px 10px;
-        background: var(--panel-2);
-        color: var(--text);
-        border: 1px solid var(--border);
-        border-radius: 8px;
+        padding: 8px 12px;
+        background: linear-gradient(90deg, rgba(96,165,250,0.08), rgba(125,211,252,0.04));
+        color: #ffd699;
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 10px;
         cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        line-height: 1;
+        transition: transform .12s ease, box-shadow .12s ease;
       }
+      .viewer .btn:active { transform: translateY(1px); }
 
       .viewer .btn:hover {
         filter: brightness(1.05);
       }
 
+      .viewer .btn .ico {
+        display: inline-flex;
+        width: 18px;
+        height: 18px;
+        margin: 0;
+      }
 
       /* Code block with line numbers and wrapping */
       .viewer .codeblock {
@@ -253,7 +376,7 @@
         word-break: break-word; /* break long tokens on mobile */
       }
 
-      /* Syntax highlighting (Java-oriented) */
+      /* Syntax highlighting (Python-oriented) */
       .tok-comment { color: #7f8fa3; font-style: italic; }
       .tok-string  { color: #a4d88f; }
       .tok-keyword { color: #8ab4ff; }
@@ -278,6 +401,34 @@
         padding: 10px 12px;
         margin: 8px 0;
         background: var(--panel-2);
+      }
+
+      /* Progress bar for search */
+      .progressRow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        padding: 8px 0 12px 0;
+      }
+      .progressBar {
+        position: relative;
+        flex: 1 1 auto;
+        height: 8px;
+        background: #ffa500;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .progressFill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0%;
+        background: #FFA500; /* orange */
+        box-shadow: 0 0 8px rgba(255,165,0,0.35);
+        transition: width .12s linear;
       }
 
       .results .hit .path {
@@ -323,24 +474,206 @@
           display: none;
         }
 
-        .codeblock {
+        .crumbs {
+          margin-top: 20px;
+        }
+
+        .code-line {
             font-size: 10px;
         }
-      
+
+        header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 80;
+          transform: translateY(0);
+          will-change: transform;
+        }
+
+        /* ensure main content doesn't hide beneath fixed header on mobile */
+        main.content {
+          padding-top: var(--mobile-header-height);
+        }
+
+      }
+
+      /* Home view layout */
+      .homeWrap {
+        display: grid;
+        place-items: center;
+        height: 100vh;
+        padding: 24px;
+        overflow: hidden;
+      }
+
+      .homeCard {
+        width: min(920px, 92vw);
+        padding: 28px 26px;
+        border-radius: 16px;
+        background: rgba(23,26,32,0.8);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px);
+      }
+
+      .homeTitle {
+        margin: 0 0 14px 0;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        font-size: 22px;
+      }
+
+      .homeSubtitle {
+        margin: 0 0 18px 0;
+        color: var(--muted);
+      }
+
+      .homeSearchRow {
+        position: relative;
+        margin-top: 8px;
+      }
+
+      .homeSearchRow input[type="search"] {
+        width: 100%;
+        padding: 22px 20px 22px 56px;
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        outline: none;
+        transition: border-color .2s ease, box-shadow .2s ease;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        font-size: 20px;
+      }
+
+      .homeSearchRow input[type="search"]:focus {
+        border-color: rgba(96,165,250,0.6);
+        box-shadow: 0 0 0 6px rgba(96,165,250,0.12);
+      }
+
+      .homeSearchRow .icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: var(--muted);
+        font-size: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .homeActions {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .homeDivider {
+        display: flex;
+        align-items: center;
+        margin: 16px 0;
+        gap: 12px;
+      }
+
+      .homeDivider::before,
+      .homeDivider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .homeDivider .or {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 0 8px;
+      }
+
+      .btnPrimary {
+        padding: 12px 14px;
+        background: var(--accent);
+        color: #0b1020;
+        border: 1px solid rgba(79,140,255,0.4);
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .btnPrimary:hover { filter: brightness(1.05); }
+
+      /* GitHub button (anchor styled as button) */
+      .btnGithub {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .btnGithub:hover { background: rgba(255,255,255,0.02); }
+
+      /* Floating GitHub FAB */
+      .fabGithubWrap {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 60;
+      }
+      .fabGithub {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        width: 46px;
+        height: 46px;
+        padding: 8px;
+        border-radius: 999px;
+        background: transparent; /* no blue circle */
+        color: #ffffff; /* white icon */
+        box-shadow: none;
+        text-decoration: none;
+        border: 1px solid rgba(255,255,255,0.04);
+        transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      }
+      .fabGithub:focus { outline: 3px solid rgba(255,255,255,0.08); }
+      .fabGithub:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+
+      /* Responsive tweaks for home */
+      @media (max-width: 860px) {
+        .homeWrap { place-items: start center; padding: 14px; }
+        .homeCard { width: 100%; padding: 18px; border-radius: 12px; }
+        .homeTitle { font-size: 20px; }
+        .homeSearchRow input[type="search"] { font-size: 18px; padding: 20px 18px 20px 52px; }
+        .homeActions { justify-content: stretch; }
+        .homeActions .btnPrimary { width: 100%; }
       }
     </style>
   </head>
-  <body>
+  <body class="preinit">
     <div class="app">
       <header>
         <div class="brand" title="PiyushJT/Java-Material">
             <div class="title">
-                <a class="rootLink" href="https://piyushjt.github.io/Java-Material/">Java Progs</a>
+                <a class="rootLink" href="https://piyushjt.github.io/JAVA-Material/">Java Progs</a>
             </div>
         </div>
         <form class="search" id="searchForm">
-          <span class="icon" aria-hidden="true">🔎</span>
+          <span class="icon" aria-hidden="true"><img src="https://raw.githubusercontent.com/PiyushJT/PiyushJT/a9d7747e25350a58f5bff349735fba8d43a573b5/search.svg" alt="" style="width:16px;height:16px;opacity:.9;"/></span>
           <input id="searchInput" type="search" placeholder="Code, Problem, File, etc" autocomplete="off" />
+          <button type="button" class="clearBtn" id="searchClearBtn" aria-label="Clear search">
+            <img src="https://raw.githubusercontent.com/PiyushJT/PiyushJT/190350a5e5b727ddc0cd3557e2d7029305bf5994/icons/cross.svg" alt="X" style="width:20px;height:20px;"/>
+          </button>
         </form>
       </header>
 
@@ -359,7 +692,9 @@
 
     <script>
       const OWNER = "PiyushJT";
-      const REPO = "Java-Material";
+      const REPO = "JAVA-Material";
+      
+      const TICK_ICON_URL = "https://raw.githubusercontent.com/PiyushJT/PiyushJT/main/icons/tick.svg";
 
       const state = {
         defaultBranch: "main",
@@ -384,7 +719,7 @@
       function parseLocation() {
         const usp = new URLSearchParams(location.search);
         return {
-          view: usp.get("view") || "folder",
+          view: usp.get("view") || "home",
           path: usp.get("p") || "",
           q: usp.get("q") || ""
         };
@@ -415,6 +750,8 @@
           state.prefetchStarted = true;
           prefetchSmallFiles().catch(() => {});
         }
+        // Reveal the app now that first render has completed
+        document.body.classList.remove('preinit');
       }
 
       function buildIndexes(tree) {
@@ -453,6 +790,18 @@
         state.fileIndex = files.sort((a, b) => a.path.localeCompare(b.path));
       }
 
+      function iconForPath(path, isDir) {
+        if (isDir) return "https://raw.githubusercontent.com/PiyushJT/PiyushJT/1cadac55bb62a80e9bfdc6cc8fb9eefce1d7eee4/icons/folder.svg";
+        const ext = (path.split('.').pop() || '').toLowerCase();
+        const map = {
+          'py': 'https://raw.githubusercontent.com/PiyushJT/PiyushJT/00ca33b80496d6ca543332f53b314e62ddf3e37b/icons/python.svg',
+          'java': 'https://raw.githubusercontent.com/PiyushJT/PiyushJT/00ca33b80496d6ca543332f53b314e62ddf3e37b/icons/java.svg',
+          'txt': 'https://raw.githubusercontent.com/PiyushJT/PiyushJT/00ca33b80496d6ca543332f53b314e62ddf3e37b/icons/txt.svg',
+          'csv': 'https://raw.githubusercontent.com/PiyushJT/PiyushJT/00ca33b80496d6ca543332f53b314e62ddf3e37b/icons/csv.svg',
+        };
+        return map[ext] || 'https://raw.githubusercontent.com/PiyushJT/PiyushJT/00ca33b80496d6ca543332f53b314e62ddf3e37b/icons/file.svg';
+      }
+
       function renderRootSidebar() {
         const rootNode = state.nodeByPath.get("");
         const ul = $("rootTree");
@@ -460,7 +809,8 @@
         const dirs = Array.from(rootNode.children.values()).filter(n => n.type === "tree").sort((a, b) => a.name.localeCompare(b.name));
         for (const dir of dirs) {
           const li = document.createElement("li");
-          li.innerHTML = `<span class="icon">📁</span><span>${dir.name}</span>`;
+          li.innerHTML = `<span class="icon">
+            <img src="https://raw.githubusercontent.com/PiyushJT/PiyushJT/1cadac55bb62a80e9bfdc6cc8fb9eefce1d7eee4/icons/folder.svg" alt="📁"/></span><span>${dir.name}</span>`;
           li.addEventListener("click", () => navigate({ view: "folder", p: dir.path }));
           ul.appendChild(li);
         }
@@ -468,16 +818,19 @@
 
       function render(replacing = false) {
         const { view, path, q } = parseLocation();
+        document.body.classList.toggle('home', view === 'home');
         renderBreadcrumbs(view, path, q);
         const panelInner = $("panelInner");
-        if (view === "folder") {
+        if (view === "home") {
+          renderHome(panelInner);
+        } else if (view === "folder") {
           renderFolder(path, panelInner);
         } else if (view === "file") {
           renderFile(path, panelInner);
         } else if (view === "search") {
           renderSearch(q, panelInner);
         } else {
-          renderFolder("", panelInner);
+          renderHome(panelInner);
         }
       }
 
@@ -491,7 +844,7 @@
           a.addEventListener("click", () => navigate(st));
           bc.appendChild(a);
         };
-        add("Repo", { view: "folder", p: "" });
+        if (view !== 'home') add("Repo", { view: "folder", p: "" });
         if (view === "search") {
           const span = document.createElement("span");
           span.textContent = ` / Search: ${q}`;
@@ -507,6 +860,72 @@
           if (!isLast || view === "folder") add(label, { view: "folder", p: acc });
           else add(label, { view: "file", p: acc });
         }
+      }
+
+      function renderHome(container) {
+        const wrap = document.createElement('div');
+        wrap.className = 'homeWrap';
+        const card = document.createElement('div');
+        card.className = 'homeCard';
+        const title = document.createElement('h1');
+        title.className = 'homeTitle';
+        title.textContent = 'Java Programs';
+        const sub = document.createElement('div');
+        sub.className = 'homeSubtitle';
+        sub.textContent = 'Search problems, files, and code across the repository';
+        const form = document.createElement('form');
+        form.className = 'homeSearchRow';
+        form.setAttribute('id', 'homeSearchForm');
+        form.innerHTML = `
+          <span class="icon" aria-hidden="true">
+            <img src="https://raw.githubusercontent.com/PiyushJT/PiyushJT/a9d7747e25350a58f5bff349735fba8d43a573b5/search.svg" alt="" style="width:22px;height:22px;opacity:.9;" />
+          </span>
+          <input id="homeSearchInput" type="search" placeholder="Search code, problems, files…" autocomplete="off" />
+          <button type="button" class="clearBtn" id="homeClearBtn" aria-label="Clear search">
+            <img src="https://raw.githubusercontent.com/PiyushJT/PiyushJT/190350a5e5b727ddc0cd3557e2d7029305bf5994/icons/cross.svg" alt="X" style="width:22px;height:22px;" />
+          </button>
+        `;
+        const actions = document.createElement('div');
+        actions.className = 'homeActions';
+        const navBtn = document.createElement('button');
+        navBtn.type = 'button';
+        navBtn.className = 'btnPrimary';
+        navBtn.id = 'navigateBtn';
+        navBtn.textContent = 'Navigate Manually';
+        actions.appendChild(navBtn);
+        // (GitHub floating button moved to bottom-right; no in-card button here)
+        // You could add helper actions here if needed.
+
+        card.appendChild(title);
+        card.appendChild(sub);
+        card.appendChild(form);
+        const divider = document.createElement('div');
+        divider.className = 'homeDivider';
+        const orText = document.createElement('span');
+        orText.className = 'or';
+        orText.textContent = 'OR';
+        divider.appendChild(orText);
+        card.appendChild(divider);
+        card.appendChild(actions);
+        wrap.appendChild(card);
+        container.innerHTML = '';
+        container.appendChild(wrap);
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const q = document.getElementById('homeSearchInput').value.trim();
+          navigate({ view: 'search', q });
+        });
+        const homeInput = document.getElementById('homeSearchInput');
+        const homeClear = document.getElementById('homeClearBtn');
+        if (homeInput && homeClear) {
+          ['input','change','focus','blur'].forEach(ev => homeInput.addEventListener(ev, () => toggleClear(homeClear, homeInput)));
+          homeClear.addEventListener('click', () => { homeInput.value=''; homeInput.focus(); toggleClear(homeClear, homeInput); });
+          toggleClear(homeClear, homeInput);
+        }
+        document.getElementById('navigateBtn').addEventListener('click', () => {
+          navigate({ view: 'folder', p: '' });
+        });
       }
 
       function renderFolder(path, container) {
@@ -531,7 +950,8 @@
 
         function addItem(item, isDir) {
           const li = document.createElement("li");
-          li.innerHTML = `<span class="icon">${isDir ? "📁" : "📄"}</span><span>${item.name}</span>`;
+          const iconUrl = iconForPath(item.path, isDir);
+          li.innerHTML = `<span class="icon"><img src="${iconUrl}" alt=""/></span><span>${item.name}</span>`;
           li.addEventListener("click", () => navigate({ view: isDir ? "folder" : "file", p: item.path }));
           list.appendChild(li);
         }
@@ -550,8 +970,11 @@
           return;
         }
         const key = `${state.defaultBranch}:${path}`;
-        const fileName = path.split('/').pop().split('.').slice(0, -1).join('.');
-        const prog = fileName.slice(0, 7) + " " + fileName.slice(7);
+        var fileName = path.split('/').pop().split('.').slice(0, -1).join('.');
+
+        if (fileName.length > 10) {
+          fileName = fileName.slice(0, 10) + '...';
+        }
 
         let content = state.contentCache.get(key);
         if (!content) {
@@ -566,15 +989,18 @@
         }
         const viewer = document.createElement("div");
         viewer.className = "viewer";
-        viewer.innerHTML = `<div class="note">${prog}</div>`;
+        viewer.innerHTML = `<div class="note">${fileName}</div>`;
         const toolbar = document.createElement("div");
         toolbar.className = "toolbar";
         const copyBtn = document.createElement("button");
         copyBtn.className = "btn";
         copyBtn.type = "button";
-        copyBtn.textContent = "Copy code";
+        copyBtn.innerHTML = `<span class="ico"><img src="https://raw.githubusercontent.com/PiyushJT/PiyushJT/c91559feee6d399b3e63dbd996d019ae4b7c49f0/icons/copy.svg" style="width:18px;height:18px;opacity:.9;"/></span><span>Copy code</span>`;
         copyBtn.addEventListener("click", async () => {
-          const original = copyBtn.textContent;
+          // Prevent repeated rapid clicks
+          if (copyBtn.__copiedLock) return;
+          copyBtn.__copiedLock = true;
+          const originalHtml = copyBtn.innerHTML;
           try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
               await navigator.clipboard.writeText(content);
@@ -589,11 +1015,19 @@
               document.execCommand("copy");
               document.body.removeChild(ta);
             }
-            copyBtn.textContent = "Copied!";
+
+            // Show tick icon and 'Copied' text in lime color
+            copyBtn.innerHTML = `<span class="ico"><img src="${TICK_ICON_URL}" style="width:18px;height:18px;opacity:1;"/></span><span style="color:var(--copied-color)">Copied</span>`;
+            copyBtn.disabled = true;
+            setTimeout(() => {
+              copyBtn.innerHTML = originalHtml;
+              copyBtn.disabled = false;
+              copyBtn.__copiedLock = false;
+            }, 2000);
+
           } catch (_) {
             copyBtn.textContent = "Failed";
-          } finally {
-            setTimeout(() => { copyBtn.textContent = original; }, 1200);
+            copyBtn.__copiedLock = false;
           }
         });
         toolbar.appendChild(copyBtn);
@@ -628,10 +1062,7 @@
       }
 
       function highlightJavaLines(text) {
-        // Escape first
         let src = escapeHtml(text);
-
-        // Placeholder-based protection to avoid overlapping replacements
         const placeholders = [];
         const put = (html) => {
           const id = `@@T${placeholders.length}@@`;
@@ -639,37 +1070,33 @@
           return id;
         };
 
-        // Block comments (multiline) and line comments
-        src = src.replace(/\/\*[\s\S]*?(?:\*\/|$)/g, (m) => put(`<span class="tok-comment">${m}</span>`));
-        src = src.replace(/(^|\s)(\/\/.*?$)/gm, (m, p1, p2) => `${p1}${put(`<span class=\"tok-comment\">${p2}</span>`)}`);
+        // Strings
+        src = src.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, m => put(`<span class="tok-string">${m}</span>`));
 
-        // Strings and char literals
-        src = src.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)')/g, (m) => put(`<span class="tok-string">${m}</span>`));
+        // Comments (single-line and block)
+        src = src.replace(/(\/\/.*?$)/gm, (m, p1) => put(`<span class="tok-comment">${p1}</span>`));
+        src = src.replace(/(\/\*[\s\S]*?\*\/)/g, (m) => put(`<span class="tok-comment">${m}</span>`));
 
-        // Annotations (e.g., @Override, @org.example.Foo)
-        src = src.replace(/(^|\s)(@[_A-Za-z][._A-Za-z0-9]*)/gm, (m, p1, p2) => `${p1}${put(`<span class=\"tok-decorator\">${p2}</span>`)}`);
-
-        // Java keywords
+        // Keywords
         const keywords = [
-          'abstract','assert','boolean','break','byte','case','catch','char','class','const','continue','default','do','double','else','enum','extends','final','finally','float','for','goto','if','implements','import','instanceof','int','interface','long','native','new','package','private','protected','public','return','short','static','strictfp','super','switch','synchronized','this','throw','throws','transient','try','void','volatile','while','record','sealed','permits','var'
+          'abstract','assert','boolean','break','byte','case','catch','char','class','const','continue','default','do','double',
+          'else','enum','extends','final','finally','float','for','goto','if','implements','import','instanceof','int','interface',
+          'long','native','new','package','private','protected','public','return','short','static','strictfp','super','switch',
+          'synchronized','this','throw','throws','transient','try','void','volatile','while'
         ];
         const kwRe = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
         src = src.replace(kwRe, '<span class="tok-keyword">$1</span>');
 
-        // Common builtins / types / utility classes (subset)
-        const builtins = ['String','System','Integer','Long','Double','Float','Short','Character','Boolean','Object','List','Map','Set','HashMap','HashSet','ArrayList','Arrays','Collections','Optional'];
-        const biRe = new RegExp(`\\b(${builtins.join('|')})\\b`, 'g');
-        src = src.replace(biRe, '<span class="tok-builtin">$1</span>');
+        // Numbers
+        src = src.replace(/\b(0x[0-9a-fA-F]+|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g, '<span class="tok-number">$1</span>');
 
-        // Numbers (hex, binary, octal, decimal with underscores and suffixes)
-        src = src.replace(/\b(0[xX][0-9a-fA-F_]+|0[bB][01_]+|0[0-7_]+|\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d[\d_]*)?[fFdDlL]?)\b/g, '<span class="tok-number">$1</span>');
+        // Class & method names
+        src = src.replace(/\b(class)(\s+)([A-Z][A-Za-z0-9_]*)/g, (m, kw, sp, name) =>
+          `<span class="tok-keyword">${kw}</span>${sp}<span class="tok-classname">${name}</span>`
+        );
+        src = src.replace(/\b([A-Za-z_][A-Za-z0-9_]*)\s*(?=\()/g, '<span class="tok-defname">$1</span>');
 
-        // class/interface/enum names (run AFTER keyword replacements)
-        src = src.replace(/\b(class|interface|enum|record)(\s+)([_A-Za-z][\w_]*)/g, (m, kw, sp, name) => `<span class="tok-keyword">${kw}</span>${sp}<span class="tok-classname">${name}</span>`);
-
-        // Restore placeholders
         src = src.replace(/@@T(\d+)@@/g, (_, idx) => placeholders[Number(idx)] || '');
-
         return src.split('\n');
       }
 
@@ -686,6 +1113,28 @@
         return text.replace(new RegExp(esc, "gi"), m => `<span class="hl">${m}</span>`);
       }
 
+      function getBasename(p) {
+        if (!p) return p;
+        const parts = p.split('/');
+        return parts[parts.length - 1];
+      }
+
+      function appendResultItem({ kind, path, snippet }, q, listEl) {
+        const hit = document.createElement("div");
+        hit.className = "hit";
+        const display = highlight(path, q);
+        const sn = snippet ? highlight(snippet, q) : "";
+        hit.innerHTML = `
+          <div class="path">${display}</div>
+          ${sn ? `<div class="snippet" style="color:var(--muted);margin-top:6px;">… ${sn} …</div>` : ""}
+        `;
+        hit.querySelector('.path').addEventListener('click', () => {
+          if (kind === 'folder') navigate({ view: 'folder', p: path });
+          else navigate({ view: 'file', p: path });
+        });
+        listEl.appendChild(hit);
+      }
+
       async function renderSearch(query, container) {
         cancelSearch();
         const guard = { aborted: false };
@@ -696,42 +1145,32 @@
           return;
         }
 
-        // Shell for incremental results
+        // Single consolidated results list
         const shell = document.createElement("div");
         shell.className = "results";
-        const fileNameHeader = document.createElement("div");
-        fileNameHeader.textContent = "Filename matches";
-        const fileNameGroup = document.createElement("div");
-
-        const contentHeader = document.createElement("div");
-        contentHeader.style.marginTop = "12px";
-        contentHeader.textContent = "Content matches";
-        const contentStatus = document.createElement("div");
-        contentStatus.className = "empty";
-        contentStatus.textContent = `Searching file contents for “${q}”…`;
-        const contentGroup = document.createElement("div");
-
-        shell.appendChild(fileNameHeader);
-        shell.appendChild(fileNameGroup);
-        shell.appendChild(contentHeader);
-        shell.appendChild(contentStatus);
-        shell.appendChild(contentGroup);
+        const list = document.createElement('div');
+        const progressRow = document.createElement('div');
+        progressRow.className = 'progressRow';
+        progressRow.innerHTML = `<div class="progressBar"><div class="progressFill" id="searchProgress"></div></div><span>Scanning files…</span>`;
+        const progressFill = progressRow.querySelector('#searchProgress');
+        shell.appendChild(progressRow);
+        shell.appendChild(list);
         container.innerHTML = "";
         container.appendChild(shell);
 
-        // 1) Immediate filename matches
         const lower = q.toLowerCase();
-        const nameMatches = state.fileIndex.filter(f => f.path.toLowerCase().includes(lower));
-        if (nameMatches.length === 0) {
-          const none = document.createElement("div");
-          none.className = "empty";
-          none.textContent = "No filename matches.";
-          fileNameGroup.appendChild(none);
-        } else {
-          renderGroupedHits(nameMatches.map(file => ({ file, pathMatch: true, contentMatch: false, snippet: "" })), q, fileNameGroup);
-        }
 
-        // 2) Incremental content matches with concurrency limit
+        // Folder matches (by folder name only)
+        const folderMatches = Array.from(state.nodeByPath.values())
+          .filter(n => n.type === 'tree' && n.path !== '' && (n.name || getBasename(n.path)).toLowerCase().includes(lower))
+          .sort((a, b) => a.path.localeCompare(b.path));
+        for (const f of folderMatches) appendResultItem({ kind: 'folder', path: f.path, snippet: '' }, q, list);
+
+        // File name matches (by basename only)
+        const nameMatches = state.fileIndex.filter(f => getBasename(f.path).toLowerCase().includes(lower));
+        for (const f of nameMatches) appendResultItem({ kind: 'file', path: f.path, snippet: '' }, q, list);
+
+        // Incremental content matches (exclude already added filename matches)
         const remaining = state.fileIndex.filter(f => !nameMatches.includes(f));
         const concurrency = 6;
         let inFlight = 0; let index = 0; let foundAny = false;
@@ -741,7 +1180,13 @@
           if (guard.aborted) return;
           if (index >= remaining.length) {
             if (inFlight === 0) {
-              contentStatus.textContent = foundAny ? "" : "No content matches.";
+              if (!foundAny && list.children.length === 0) {
+                const none = document.createElement('div');
+                none.className = 'empty';
+                none.textContent = 'No matches.';
+                list.appendChild(none);
+              }
+              progressRow.remove();
             }
             return;
           }
@@ -775,16 +1220,22 @@
               const start = Math.max(0, idx - 40);
               const end = Math.min(text.length, idx + q.length + 40);
               const snippet = text.slice(start, end).replace(/</g, "&lt;");
-              renderGroupedHits([{ file, pathMatch: false, contentMatch: true, snippet }], q, contentGroup, true);
+              appendResultItem({ kind: 'file', path: file.path, snippet }, q, list);
             }
           } catch (e) {
             // ignore
           } finally {
             inFlight--;
+            // Update progress width
+            const processed = Math.min(index, remaining.length) - inFlight;
+            const pct = remaining.length > 0 ? Math.max(0, Math.min(100, Math.round((processed / remaining.length) * 100))) : 100;
+            if (progressFill) progressFill.style.width = pct + '%';
             queueNext();
           }
         };
         for (let i = 0; i < concurrency && i < remaining.length; i++) queueNext();
+        // If there are no remaining files, remove progress immediately
+        if (remaining.length === 0) progressRow.remove();
       }
 
       function concatUint8(chunks) {
@@ -795,37 +1246,7 @@
         return out;
       }
 
-      function renderGroupedHits(hits, q, container, append = false) {
-        const byDir = new Map();
-        for (const r of hits) {
-          const dir = r.file.path.includes("/") ? r.file.path.split("/").slice(0, -1).join("/") : "";
-          if (!byDir.has(dir)) byDir.set(dir, []);
-          byDir.get(dir).push(r);
-        }
-        const dirs = Array.from(byDir.keys()).sort();
-        if (!append) container.innerHTML = "";
-        for (const dir of dirs) {
-          let group = container.querySelector(`[data-group="${CSS.escape(dir)}"]`);
-          if (!group) {
-            group = document.createElement("div");
-            group.setAttribute("data-group", dir);
-            container.appendChild(group);
-          }
-          const items = byDir.get(dir).sort((a, b) => a.file.path.localeCompare(b.file.path));
-          for (const r of items) {
-            const hit = document.createElement("div");
-            hit.className = "hit";
-            const pathHtml = highlight(r.file.path, q);
-            const sn = r.snippet ? highlight(r.snippet, q) : "";
-            hit.innerHTML = `
-              <div class="path">${pathHtml}</div>
-              ${sn ? `<div class="snippet" style="color:var(--muted);margin-top:6px;">… ${sn} …</div>` : ""}
-            `;
-            hit.querySelector(".path").addEventListener("click", () => navigate({ view: "file", p: r.file.path }));
-            group.appendChild(hit);
-          }
-        }
-      }
+      // renderGroupedHits removed in favor of single list rendering
 
       async function prefetchSmallFiles() {
         const candidates = state.fileIndex.slice(0, 50);
@@ -873,16 +1294,175 @@
         navigate({ view: "search", q });
       });
 
+      // Wire custom clear buttons
+      const headerInput = document.getElementById('searchInput');
+      const headerClear = document.getElementById('searchClearBtn');
+      const homeClearSel = '#homeClearBtn';
+      function toggleClear(btn, input) {
+        if (!btn || !input) return;
+        btn.style.display = input.value ? 'inline-flex' : 'none';
+      }
+      if (headerInput && headerClear) {
+        ['input','change','focus','blur'].forEach(ev => headerInput.addEventListener(ev, () => toggleClear(headerClear, headerInput)));
+        headerClear.addEventListener('click', () => { headerInput.value = ''; headerInput.focus(); toggleClear(headerClear, headerInput); });
+        toggleClear(headerClear, headerInput);
+      }
+
       window.addEventListener("popstate", () => render());
 
       document.addEventListener("DOMContentLoaded", () => {
         init().catch(err => {
           $("panelInner").innerHTML = `<div class="empty">Failed to load repository.</div>`;
           console.error(err);
+          document.body.classList.remove('preinit');
         });
       });
     </script>
+    <script>
+      // Create floating GitHub FAB that links to the repo, visible only on the home view
+      (function(){
+        try {
+          const wrap = document.createElement('div');
+          wrap.className = 'fabGithubWrap';
+          wrap.style.display = 'none'; // hidden by default
+          const a = document.createElement('a');
+          a.className = 'fabGithub';
+          a.href = `https://github.com/${OWNER}/${REPO}`;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.setAttribute('aria-label', 'View or contribute on GitHub');
+          a.innerHTML = `<svg width="40" height="40" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>`;
+          wrap.appendChild(a);
+          document.body.appendChild(wrap);
+
+          // Helper to toggle visibility based on body.home class
+          const toggle = () => { wrap.style.display = document.body.classList.contains('home') ? '' : 'none'; };
+
+          // Initial toggle
+          toggle();
+
+          // Observe class changes on body to update visibility
+          const obs = new MutationObserver((mutList) => { toggle(); });
+          obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        } catch (e) { /* ignore if DOM not ready */ }
+      })();
+    </script>
+
+    <script>
+(function () {
+  const header = document.querySelector("header");
+  if (!header) return;
+
+  const mq = window.matchMedia("(max-width: 980px)");
+  let scroller = null;               // element we listen to for scroll
+  let lastY = 0;
+  let ticking = false;
+  let boundOnScroll = null;
+
+  // threshold values (px). Tweak if too sensitive.
+  const UP_THRESHOLD = -5;   // negative => scrolling up
+  const DOWN_THRESHOLD = 5;  // positive => scrolling down
+  const MIN_HIDE_SCROLL = 60; // only start hiding after this offset
+
+  function getScrollTop(el) {
+    // for document / window fallback
+    if (!el) return window.scrollY || document.documentElement.scrollTop || 0;
+    // if it's an element with scrollTop property
+    return (typeof el.scrollTop === "number") ? el.scrollTop : window.scrollY || document.documentElement.scrollTop || 0;
+  }
+
+  function attachScroller() {
+    // remove previous listener if any
+    if (scroller && boundOnScroll) {
+      try { scroller.removeEventListener("scroll", boundOnScroll, { passive: true }); } catch(e){ }
+      try { window.removeEventListener("scroll", boundOnScroll, { passive: true }); } catch(e){ }
+    }
+
+    // choose scroller: on mobile use main.content, else use document scrollingElement
+    if (mq.matches) {
+      scroller = document.querySelector("main.content") || document.scrollingElement || document.documentElement;
+    } else {
+      scroller = document.scrollingElement || document.documentElement;
+    }
+
+    // initialize lastY to avoid a big jump
+    lastY = getScrollTop(scroller);
+
+    // bound scroll handler so we can remove it later
+    boundOnScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    // attach to the correct target
+    if (scroller === window || scroller === document.scrollingElement || scroller === document.documentElement) {
+      window.addEventListener("scroll", boundOnScroll, { passive: true });
+    } else {
+      scroller.addEventListener("scroll", boundOnScroll, { passive: true });
+      // also listen to window resize/scroll as a fallback
+      window.addEventListener("scroll", boundOnScroll, { passive: true });
+    }
+  }
+
+  function update() {
+    const currentY = getScrollTop(scroller);
+    const delta = currentY - lastY;
+
+    // if not mobile, ensure header visible and exit early
+    if (!mq.matches) {
+      header.style.transform = "translateY(0)";
+      lastY = currentY;
+      ticking = false;
+      return;
+    }
+
+    // always reveal at top of page to avoid being hidden on initial load
+    if (currentY <= 5) {
+      header.style.transform = "translateY(0)";
+      lastY = currentY;
+      ticking = false;
+      return;
+    }
+
+    // apply thresholds to avoid flicker from micro-scrolls
+    if (delta > DOWN_THRESHOLD && currentY > MIN_HIDE_SCROLL) {
+      // scrolled down
+      header.style.transform = "translateY(-100%)";
+    } else if (delta < UP_THRESHOLD) {
+      // scrolled up
+      header.style.transform = "translateY(0)";
+    }
+    lastY = currentY;
+    ticking = false;
+  }
+
+  // watch for breakpoint changes and reattach scroller appropriately
+  function onMediaChange() {
+    attachScroller();
+    // ensure header visible when switching to desktop
+    if (!mq.matches) header.style.transform = "translateY(0)";
+  }
+
+  // initial attach
+  attachScroller();
+
+  // media query change handling (modern + fallback)
+  if (typeof mq.addEventListener === "function") {
+    mq.addEventListener("change", onMediaChange);
+  } else if (typeof mq.addListener === "function") {
+    mq.addListener(onMediaChange);
+  }
+
+  // also reattach on orientation change or resize (some mobile browsers change scroll container)
+  window.addEventListener("orientationchange", () => setTimeout(attachScroller, 120));
+  window.addEventListener("resize", () => setTimeout(attachScroller, 120));
+})();
+</script>
+
+
+
+
   </body>
 </html>
-
-
