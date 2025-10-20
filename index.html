@@ -603,9 +603,38 @@
         border-radius: 10px;
         cursor: pointer;
         font-weight: 600;
+        flex: 1;
       }
 
       .btnPrimary:hover { filter: brightness(1.05); }
+
+      .btnSearch {
+        padding: 12px 14px;
+        background: #22c55e; /* Emerald green - represents action */
+        color: #0b1020;
+        border: 1px solid rgba(34,197,94,0.4);
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        flex: 1;
+      }
+
+      .btnSearch:hover { filter: brightness(1.05); }
+
+      .homeActions {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      @media (max-width: 860px) {
+        .homeActions {
+          flex-direction: column;
+        }
+        .homeActions button {
+          width: 100%;
+        }
+      }
 
       /* GitHub button (anchor styled as button) */
       .btnGithub {
@@ -887,11 +916,13 @@
         `;
         const actions = document.createElement('div');
         actions.className = 'homeActions';
+
         const navBtn = document.createElement('button');
         navBtn.type = 'button';
         navBtn.className = 'btnPrimary';
         navBtn.id = 'navigateBtn';
         navBtn.textContent = 'Navigate Manually';
+
         actions.appendChild(navBtn);
         // (GitHub floating button moved to bottom-right; no in-card button here)
         // You could add helper actions here if needed.
@@ -899,6 +930,17 @@
         card.appendChild(title);
         card.appendChild(sub);
         card.appendChild(form);
+
+        // Add search button right after the form
+        const searchBtn = document.createElement('button');
+        searchBtn.type = 'button';
+        searchBtn.className = 'btnSearch';
+        searchBtn.style.width = '100%';
+        searchBtn.style.marginTop = '12px';
+        searchBtn.id = 'searchBtn';
+        searchBtn.textContent = 'Search';
+        card.appendChild(searchBtn);
+
         const divider = document.createElement('div');
         divider.className = 'homeDivider';
         const orText = document.createElement('span');
@@ -923,8 +965,17 @@
           homeClear.addEventListener('click', () => { homeInput.value=''; homeInput.focus(); toggleClear(homeClear, homeInput); });
           toggleClear(homeClear, homeInput);
         }
+        
         document.getElementById('navigateBtn').addEventListener('click', () => {
           navigate({ view: 'folder', p: '' });
+        });
+
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          const query = document.getElementById('homeSearchInput').value.trim();
+          if (query) {
+            navigate({ view: 'search', q: query });
+          }
         });
       }
 
@@ -1349,120 +1400,118 @@
     </script>
 
     <script>
-(function () {
-  const header = document.querySelector("header");
-  if (!header) return;
 
-  const mq = window.matchMedia("(max-width: 980px)");
-  let scroller = null;               // element we listen to for scroll
-  let lastY = 0;
-  let ticking = false;
-  let boundOnScroll = null;
-
-  // threshold values (px). Tweak if too sensitive.
-  const UP_THRESHOLD = -5;   // negative => scrolling up
-  const DOWN_THRESHOLD = 5;  // positive => scrolling down
-  const MIN_HIDE_SCROLL = 60; // only start hiding after this offset
-
-  function getScrollTop(el) {
-    // for document / window fallback
-    if (!el) return window.scrollY || document.documentElement.scrollTop || 0;
-    // if it's an element with scrollTop property
-    return (typeof el.scrollTop === "number") ? el.scrollTop : window.scrollY || document.documentElement.scrollTop || 0;
-  }
-
-  function attachScroller() {
-    // remove previous listener if any
-    if (scroller && boundOnScroll) {
-      try { scroller.removeEventListener("scroll", boundOnScroll, { passive: true }); } catch(e){ }
-      try { window.removeEventListener("scroll", boundOnScroll, { passive: true }); } catch(e){ }
-    }
-
-    // choose scroller: on mobile use main.content, else use document scrollingElement
-    if (mq.matches) {
-      scroller = document.querySelector("main.content") || document.scrollingElement || document.documentElement;
-    } else {
-      scroller = document.scrollingElement || document.documentElement;
-    }
-
-    // initialize lastY to avoid a big jump
-    lastY = getScrollTop(scroller);
-
-    // bound scroll handler so we can remove it later
-    boundOnScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(update);
-        ticking = true;
-      }
-    };
-
-    // attach to the correct target
-    if (scroller === window || scroller === document.scrollingElement || scroller === document.documentElement) {
-      window.addEventListener("scroll", boundOnScroll, { passive: true });
-    } else {
-      scroller.addEventListener("scroll", boundOnScroll, { passive: true });
-      // also listen to window resize/scroll as a fallback
-      window.addEventListener("scroll", boundOnScroll, { passive: true });
-    }
-  }
-
-  function update() {
-    const currentY = getScrollTop(scroller);
-    const delta = currentY - lastY;
-
-    // if not mobile, ensure header visible and exit early
-    if (!mq.matches) {
-      header.style.transform = "translateY(0)";
-      lastY = currentY;
-      ticking = false;
-      return;
-    }
-
-    // always reveal at top of page to avoid being hidden on initial load
-    if (currentY <= 5) {
-      header.style.transform = "translateY(0)";
-      lastY = currentY;
-      ticking = false;
-      return;
-    }
-
-    // apply thresholds to avoid flicker from micro-scrolls
-    if (delta > DOWN_THRESHOLD && currentY > MIN_HIDE_SCROLL) {
-      // scrolled down
-      header.style.transform = "translateY(-100%)";
-    } else if (delta < UP_THRESHOLD) {
-      // scrolled up
-      header.style.transform = "translateY(0)";
-    }
-    lastY = currentY;
-    ticking = false;
-  }
-
-  // watch for breakpoint changes and reattach scroller appropriately
-  function onMediaChange() {
-    attachScroller();
-    // ensure header visible when switching to desktop
-    if (!mq.matches) header.style.transform = "translateY(0)";
-  }
-
-  // initial attach
-  attachScroller();
-
-  // media query change handling (modern + fallback)
-  if (typeof mq.addEventListener === "function") {
-    mq.addEventListener("change", onMediaChange);
-  } else if (typeof mq.addListener === "function") {
-    mq.addListener(onMediaChange);
-  }
-
-  // also reattach on orientation change or resize (some mobile browsers change scroll container)
-  window.addEventListener("orientationchange", () => setTimeout(attachScroller, 120));
-  window.addEventListener("resize", () => setTimeout(attachScroller, 120));
-})();
-</script>
-
-
-
+      (function () {
+        const header = document.querySelector("header");
+        if (!header) return;
+      
+        const mq = window.matchMedia("(max-width: 980px)");
+        let scroller = null;               // element we listen to for scroll
+        let lastY = 0;
+        let ticking = false;
+        let boundOnScroll = null;
+      
+        // threshold values (px). Tweak if too sensitive.
+        const UP_THRESHOLD = -5;   // negative => scrolling up
+        const DOWN_THRESHOLD = 5;  // positive => scrolling down
+        const MIN_HIDE_SCROLL = 60; // only start hiding after this offset
+      
+        function getScrollTop(el) {
+          // for document / window fallback
+          if (!el) return window.scrollY || document.documentElement.scrollTop || 0;
+          // if it's an element with scrollTop property
+          return (typeof el.scrollTop === "number") ? el.scrollTop : window.scrollY || document.documentElement.scrollTop || 0;
+        }
+      
+        function attachScroller() {
+          // remove previous listener if any
+          if (scroller && boundOnScroll) {
+            try { scroller.removeEventListener("scroll", boundOnScroll, { passive: true }); } catch(e){ }
+            try { window.removeEventListener("scroll", boundOnScroll, { passive: true }); } catch(e){ }
+          }
+        
+          // choose scroller: on mobile use main.content, else use document scrollingElement
+          if (mq.matches) {
+            scroller = document.querySelector("main.content") || document.scrollingElement || document.documentElement;
+          } else {
+            scroller = document.scrollingElement || document.documentElement;
+          }
+        
+          // initialize lastY to avoid a big jump
+          lastY = getScrollTop(scroller);
+        
+          // bound scroll handler so we can remove it later
+          boundOnScroll = () => {
+            if (!ticking) {
+              window.requestAnimationFrame(update);
+              ticking = true;
+            }
+          };
+        
+          // attach to the correct target
+          if (scroller === window || scroller === document.scrollingElement || scroller === document.documentElement) {
+            window.addEventListener("scroll", boundOnScroll, { passive: true });
+          } else {
+            scroller.addEventListener("scroll", boundOnScroll, { passive: true });
+            // also listen to window resize/scroll as a fallback
+            window.addEventListener("scroll", boundOnScroll, { passive: true });
+          }
+        }
+      
+        function update() {
+          const currentY = getScrollTop(scroller);
+          const delta = currentY - lastY;
+        
+          // if not mobile, ensure header visible and exit early
+          if (!mq.matches) {
+            header.style.transform = "translateY(0)";
+            lastY = currentY;
+            ticking = false;
+            return;
+          }
+        
+          // always reveal at top of page to avoid being hidden on initial load
+          if (currentY <= 5) {
+            header.style.transform = "translateY(0)";
+            lastY = currentY;
+            ticking = false;
+            return;
+          }
+        
+          // apply thresholds to avoid flicker from micro-scrolls
+          if (delta > DOWN_THRESHOLD && currentY > MIN_HIDE_SCROLL) {
+            // scrolled down
+            header.style.transform = "translateY(-100%)";
+          } else if (delta < UP_THRESHOLD) {
+            // scrolled up
+            header.style.transform = "translateY(0)";
+          }
+          lastY = currentY;
+          ticking = false;
+        }
+      
+        // watch for breakpoint changes and reattach scroller appropriately
+        function onMediaChange() {
+          attachScroller();
+          // ensure header visible when switching to desktop
+          if (!mq.matches) header.style.transform = "translateY(0)";
+        }
+      
+        // initial attach
+        attachScroller();
+      
+        // media query change handling (modern + fallback)
+        if (typeof mq.addEventListener === "function") {
+          mq.addEventListener("change", onMediaChange);
+        } else if (typeof mq.addListener === "function") {
+          mq.addListener(onMediaChange);
+        }
+      
+        // also reattach on orientation change or resize (some mobile browsers change scroll container)
+        window.addEventListener("orientationchange", () => setTimeout(attachScroller, 120));
+        window.addEventListener("resize", () => setTimeout(attachScroller, 120));
+      })();
+    </script>
 
   </body>
 </html>
